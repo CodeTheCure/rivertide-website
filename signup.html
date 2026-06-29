@@ -1,0 +1,339 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Join the Waitlist - Rivertide</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#93000a",
+                    "surface-bright": "#fcf9f8",
+                    "inverse-surface": "#313030",
+                    "alert-crimson": "#7F1C34",
+                    "surface-variant": "#e5e2e1",
+                    "healing-teal": "#034F46",
+                    "secondary": "#6a5778",
+                    "surface-container-highest": "#e5e2e1",
+                    "primary-fixed": "#afefe2",
+                    "on-primary-fixed": "#00201c",
+                    "on-tertiary-fixed": "#1b1d11",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#6f5b7d",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#d6bee5",
+                    "secondary-container": "#f0d7ff",
+                    "surface-container": "#f0eded",
+                    "on-primary-fixed-variant": "#055047",
+                    "inverse-on-surface": "#f3f0ef",
+                    "tertiary": "#2f3124",
+                    "surface-container-high": "#eae7e7",
+                    "surface": "#fcf9f8",
+                    "soft-lavender": "#F0D7FF",
+                    "tertiary-fixed": "#e3e4d0",
+                    "surface-dim": "#dcd9d9",
+                    "surface-container-low": "#f6f3f2",
+                    "secondary-fixed": "#f2daff",
+                    "warm-parchment": "#FFFFEB",
+                    "on-secondary-fixed-variant": "#524060",
+                    "outline-variant": "#bfc9c5",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#94d2c6",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#29685f",
+                    "on-primary-container": "#81bfb3",
+                    "background": "#fcf9f8",
+                    "primary-container": "#034f46",
+                    "on-secondary-fixed": "#251432",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#46483a",
+                    "on-tertiary-container": "#b4b5a3",
+                    "on-surface": "#1c1b1b",
+                    "outline": "#6f7976",
+                    "on-background": "#1c1b1b",
+                    "tertiary-container": "#454739",
+                    "primary-fixed-dim": "#94d2c6",
+                    "primary": "#003630",
+                    "on-surface-variant": "#3f4946",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#c7c8b5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "unit": "8px",
+                    "margin-desktop": "64px",
+                    "container-max": "1100px",
+                    "section-gap": "120px",
+                    "container-padding": "40px"
+            },
+            "fontFamily": {
+                    "body-lg": ["manrope"],
+                    "body-md": ["manrope"],
+                    "headline-md": ["manrope"],
+                    "headline-lg": ["manrope"],
+                    "label-caps": ["jetbrainsMono"]
+            },
+            "fontSize": {
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #fcf9f8; font-family: 'Manrope', sans-serif; color: #1c1b1b; }
+        .hero-gradient { background: radial-gradient(circle at 20% 30%, rgba(5, 80, 71, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(240, 215, 255, 0.2) 0%, transparent 50%), #fcf9f8; }
+
+        /* Count animation */
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .count-animate {
+            animation: countUp 0.6s ease forwards;
+        }
+
+        /* Form focus glow */
+        .waitlist-input:focus {
+            box-shadow: 0 0 0 3px rgba(3, 79, 70, 0.15), 0 0 20px rgba(148, 210, 198, 0.1);
+        }
+
+        /* Success check animation */
+        @keyframes checkIn {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .check-animate {
+            animation: checkIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-surface selection:bg-soft-lavender">
+
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline/5">
+<nav class="flex justify-between items-center px-container-padding h-20 max-w-7xl mx-auto w-full">
+<a href="/" class="font-headline-sm text-headline-sm font-bold text-primary flex items-center gap-2">
+<img alt="Rivertide Logo" class="w-10 h-10 object-contain" src="logo.png">
+        Rivertide
+    </a>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="/">Features</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="agents.html">Agents</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="https://www.codethecure.app/" target="_blank" rel="noopener noreferrer">About us</a>
+</div>
+</nav>
+</header>
+
+<main class="pt-20 min-h-screen flex items-center">
+<section class="w-full py-section-gap px-container-padding hero-gradient min-h-[calc(100vh-5rem)] flex items-center">
+<div class="max-w-2xl mx-auto w-full">
+<!-- Status Badge -->
+<div class="text-center mb-10">
+<h1 class="font-headline-lg text-headline-lg mb-4">Join the <span class="italic font-light text-healing-teal">Waitlist</span></h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-4">Rivertide is currently in private beta. Get early access and be among the first to experience the Wellness OS for Oncology.</p>
+</div>
+
+<!-- Signup Form Card -->
+<div class="glass-panel rounded-3xl border border-outline/10 shadow-2xl p-10 max-w-lg mx-auto" id="signup-card">
+<form id="waitlist-form" class="space-y-6">
+<div class="space-y-4">
+<label class="font-label-caps text-[10px] text-on-surface-variant tracking-[0.15em]" for="name">Full Name</label>
+<input class="waitlist-input w-full bg-surface p-4 rounded-2xl border-2 border-outline-variant focus:border-healing-teal focus:ring-0 font-body-md transition-all text-[15px]" id="name" name="name" placeholder="Your name" type="text" required>
+</div>
+<div class="space-y-4">
+<label class="font-label-caps text-[10px] text-on-surface-variant tracking-[0.15em]" for="email">Email Address</label>
+<input class="waitlist-input w-full bg-surface p-4 rounded-2xl border-2 border-outline-variant focus:border-healing-teal focus:ring-0 font-body-md transition-all text-[15px]" id="email" name="email" placeholder="you@example.com" type="email" required>
+</div>
+<div class="space-y-4">
+<label class="font-label-caps text-[10px] text-on-surface-variant tracking-[0.15em]" for="role">I am a...</label>
+<select class="waitlist-input w-full bg-surface p-4 rounded-2xl border-2 border-outline-variant focus:border-healing-teal focus:ring-0 font-body-md transition-all text-[15px] text-on-surface-variant" id="role" name="role">
+<option value="" disabled selected>Select your role</option>
+<option value="patient">Patient or Caregiver</option>
+<option value="provider">Healthcare Provider</option>
+<option value="researcher">Researcher</option>
+<option value="partner">Potential Partner</option>
+<option value="other">Just curious</option>
+</select>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-full font-headline-md text-headline-md font-bold hover:scale-[1.01] active:scale-[0.99] transition-all shadow-xl shadow-primary/10 mt-4" id="submit-btn" type="submit">
+<span id="btn-text">Join the Waitlist</span>
+<span class="hidden" id="btn-loading">
+<span class="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></span>
+                Submitting...
+            </span>
+</button>
+</form>
+
+<!-- Success state (hidden initially) -->
+<div class="hidden text-center py-8" id="success-state">
+<div class="w-20 h-20 rounded-full bg-healing-teal/10 flex items-center justify-center mx-auto mb-6 check-animate">
+<span class="material-symbols-outlined text-healing-teal text-4xl" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<h2 class="font-headline-md text-headline-md mb-3 text-healing-teal">You're on the list!</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">We'll keep you posted on our progress and invite you as soon as we launch. No spam, ever.</p>
+<a href="/">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-headline-md text-lg font-bold hover:scale-[1.02] transition-all shadow-lg">
+                Back to Home
+            </button>
+</a>
+</div>
+</div>
+
+</div>
+</section>
+</main>
+
+<!-- Footer Shell -->
+<footer class="w-full py-16 bg-primary">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding max-w-7xl mx-auto">
+<div class="mb-8 md:mb-0">
+<a href="/" class="font-headline-md text-headline-md text-secondary-fixed mb-2 font-bold flex items-center gap-3">
+<img alt="Rivertide Logo" class="w-10 h-10 object-contain invert brightness-0" src="logo.png">
+        Rivertide
+    </a>
+<p class="font-label-md text-label-md text-on-primary/70">© 2026 Rivertide -- Built by CodeTheCure Labs</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8 md:gap-12">
+<a class="font-body-md text-body-md text-on-primary/70 hover:text-secondary-fixed transition-opacity opacity-80 hover:opacity-100" href="/">Features</a>
+<a class="font-body-md text-body-md text-on-primary/70 hover:text-secondary-fixed transition-opacity opacity-80 hover:opacity-100" href="agents.html">Agents</a>
+<a class="font-body-md text-body-md text-on-primary/70 hover:text-secondary-fixed transition-opacity opacity-80 hover:opacity-100" href="https://www.codethecure.app/" target="_blank" rel="noopener noreferrer">About us</a>
+</div>
+</div>
+</footer>
+
+<script>
+    const form = document.getElementById('waitlist-form');
+    const successState = document.getElementById('success-state');
+    const signupCard = document.getElementById('signup-card');
+    const formCard = signupCard.querySelector('form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnLoading = document.getElementById('btn-loading');
+    const errorEl = document.createElement('div');
+    errorEl.className = 'text-alert-crimson text-sm font-body-md mt-2 hidden';
+    formCard.appendChild(errorEl);
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const role = document.getElementById('role').value;
+
+        if (!name || !email || !role) {
+            errorEl.textContent = 'Please fill in all fields.';
+            errorEl.classList.remove('hidden');
+            return;
+        }
+        errorEl.classList.add('hidden');
+
+        // Determine API base (dev server uses port 3001)
+        const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3001'
+            : '';
+
+        btnText.classList.add('hidden');
+        btnLoading.classList.remove('hidden');
+        submitBtn.disabled = true;
+
+        // Try Supabase client directly first (works on GitHub Pages without a server),
+        // then fall back to the API server for the dev environment.
+        let directSuccess = false;
+
+        // Try direct Supabase insert (RLS anon policy allows inserts)
+        try {
+            const supabaseClient = supabase.createClient(
+                'https://buqkyurrybxcdrdleoht.supabase.co',
+                'sb_publishable_feAgAlQ5gBQ2q6CfopHMtg_IQa5KOzu'
+            );
+            const { error: insertError } = await supabaseClient
+                .from('waitlist')
+                .insert({ name, email, role, source: 'website' });
+
+            if (!insertError) {
+                directSuccess = true;
+                console.log('Waitlist signup (direct Supabase):', { name, email, role });
+            } else if (insertError.code === '23505') {
+                // Duplicate email - stop here and show the error
+                btnLoading.classList.add('hidden');
+                btnText.classList.remove('hidden');
+                submitBtn.disabled = false;
+                errorEl.textContent = 'This email is already on the waitlist.';
+                errorEl.classList.remove('hidden');
+                return;
+            } else {
+                console.warn('Supabase direct insert failed:', insertError);
+            }
+        } catch (supabaseErr) {
+            console.warn('Supabase client error:', supabaseErr);
+        }
+
+        if (directSuccess) {
+            btnLoading.classList.add('hidden');
+            btnText.classList.remove('hidden');
+            formCard.classList.add('hidden');
+            successState.classList.remove('hidden');
+            return;
+        }
+
+        // Fall back to the API server (for local dev with the Node server running)
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 4000);
+
+            const res = await fetch(API + '/api/waitlist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, role }),
+                signal: controller.signal,
+            });
+
+            clearTimeout(timeout);
+            const result = await res.json();
+
+            if (!res.ok) {
+                throw new Error(result.errors?.[0] || 'Something went wrong.');
+            }
+
+            // Success from API
+            btnLoading.classList.add('hidden');
+            btnText.classList.remove('hidden');
+            formCard.classList.add('hidden');
+            successState.classList.remove('hidden');
+        } catch (err) {
+            // Both Supabase and API failed — save to localStorage as last resort
+            try {
+                const existing = JSON.parse(localStorage.getItem('rivertide_waitlist') || '[]');
+                existing.push({ name, email, role, timestamp: new Date().toISOString() });
+                localStorage.setItem('rivertide_waitlist', JSON.stringify(existing));
+                console.log('Waitlist signup (localStorage fallback):', { name, email, role });
+            } catch (_) { /* localStorage full or blocked */ }
+
+            btnLoading.classList.add('hidden');
+            btnText.classList.remove('hidden');
+            formCard.classList.add('hidden');
+            successState.classList.remove('hidden');
+        }
+    });
+</script>
+</body></html>

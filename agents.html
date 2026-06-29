@@ -1,0 +1,501 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Agents - Rivertide | The Wellness OS for Oncology</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#93000a",
+                    "surface-bright": "#fcf9f8",
+                    "inverse-surface": "#313030",
+                    "alert-crimson": "#7F1C34",
+                    "surface-variant": "#e5e2e1",
+                    "healing-teal": "#034F46",
+                    "secondary": "#6a5778",
+                    "surface-container-highest": "#e5e2e1",
+                    "primary-fixed": "#afefe2",
+                    "on-primary-fixed": "#00201c",
+                    "on-tertiary-fixed": "#1b1d11",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#6f5b7d",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#d6bee5",
+                    "secondary-container": "#f0d7ff",
+                    "surface-container": "#f0eded",
+                    "on-primary-fixed-variant": "#055047",
+                    "inverse-on-surface": "#f3f0ef",
+                    "tertiary": "#2f3124",
+                    "surface-container-high": "#eae7e7",
+                    "surface": "#fcf9f8",
+                    "soft-lavender": "#F0D7FF",
+                    "tertiary-fixed": "#e3e4d0",
+                    "surface-dim": "#dcd9d9",
+                    "surface-container-low": "#f6f3f2",
+                    "secondary-fixed": "#f2daff",
+                    "warm-parchment": "#FFFFEB",
+                    "on-secondary-fixed-variant": "#524060",
+                    "outline-variant": "#bfc9c5",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#94d2c6",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#29685f",
+                    "on-primary-container": "#81bfb3",
+                    "background": "#fcf9f8",
+                    "primary-container": "#034f46",
+                    "on-secondary-fixed": "#251432",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#46483a",
+                    "on-tertiary-container": "#b4b5a3",
+                    "on-surface": "#1c1b1b",
+                    "outline": "#6f7976",
+                    "on-background": "#1c1b1b",
+                    "tertiary-container": "#454739",
+                    "primary-fixed-dim": "#94d2c6",
+                    "primary": "#003630",
+                    "on-surface-variant": "#3f4946",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#c7c8b5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "unit": "8px",
+                    "margin-desktop": "64px",
+                    "container-max": "1100px",
+                    "section-gap": "120px",
+                    "container-padding": "40px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["manrope"],
+                    "body-lg": ["manrope"],
+                    "body-md": ["manrope"],
+                    "headline-md": ["manrope"],
+                    "transcript-text": ["manrope"],
+                    "headline-lg": ["manrope"],
+                    "label-caps": ["jetbrainsMono"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "transcript-text": ["22px", {"lineHeight": "36px", "fontWeight": "400"}],
+                    "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #fcf9f8; font-family: 'Manrope', sans-serif; color: #1c1b1b; }
+        .glass-panel { background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .hero-gradient { background: radial-gradient(circle at 20% 30%, rgba(5, 80, 71, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(240, 215, 255, 0.2) 0%, transparent 50%), #fcf9f8; }
+
+        /* Capability Card Animations */
+        .cap-card {
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .cap-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cap-icon {
+            transition: all 0.4s ease;
+        }
+
+
+        /* Pulse ring for active agents */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 0.3; }
+            100% { transform: scale(0.95); opacity: 0.7; }
+        }
+        .pulse-ring {
+            animation: pulse-ring 2s ease-in-out infinite;
+        }
+
+        /* Walkthrough animation */
+        .walkthrough-step {
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        .walkthrough-step.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Floating badge */
+        .floating-badge {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Connection dot animation */
+        .conn-dot {
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+    </style>
+</head>
+<body class="bg-surface selection:bg-soft-lavender">
+
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline/5">
+<nav class="flex justify-between items-center px-container-padding h-20 max-w-7xl mx-auto w-full">
+<a href="/" class="font-headline-sm text-headline-sm font-bold text-primary flex items-center gap-2">
+<img alt="Rivertide Logo" class="w-10 h-10 object-contain" src="logo.png">
+            Rivertide
+        </a>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="/">Features</a>
+<a class="font-body-md text-body-md text-healing-teal font-bold transition-colors duration-300" href="agents.html">Agents</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="https://www.codethecure.app/" target="_blank" rel="noopener noreferrer">About us</a>
+</div>
+<a href="signup.html">
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-body-md font-bold transition-all duration-200 hover:shadow-lg active:scale-95">
+            Sign up for free
+        </button>
+</a>
+</nav>
+</header>
+
+<main class="pt-20">
+
+<!-- Hero Section -->
+<section class="relative min-h-[70vh] flex items-center pb-20 overflow-hidden hero-gradient">
+<div class="max-w-7xl mx-auto px-container-padding w-full">
+<div class="grid lg:grid-cols-2 gap-16 items-center pt-8 lg:pt-16">
+<div class="relative z-10">
+<div class="inline-flex items-center gap-2 px-4 py-2 bg-soft-lavender/50 rounded-full border border-secondary/10 mb-8">
+<span class="font-label-caps text-[10px] text-healing-teal tracking-[0.1em]">In BETA</span>
+</div>
+<h1 class="font-headline-lg text-[56px] md:text-[80px] leading-[1.05] tracking-tight mb-6 text-primary">
+                Agents that <br><span class="italic font-light text-healing-teal">fight with you.</span>
+</h1>
+<p class="font-body-lg text-[20px] text-on-surface-variant max-w-xl mb-8 leading-relaxed">Rivertide Agents are purpose-built AI assistants that understand your full oncology journey - medications, symptoms, appointments, and paperwork - so you don't have to carry it alone.</p>
+<div class="flex flex-wrap gap-4">
+<a href="signup.html">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-headline-md text-lg font-bold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-primary/10">Get early access</button>
+</a>
+<a href="/#walkthrough">
+<button class="flex items-center gap-2 bg-white/50 backdrop-blur-md border border-outline/20 px-8 py-4 rounded-full font-headline-md text-lg font-bold hover:bg-white/80 transition-all">
+<span class="material-symbols-outlined">play_arrow</span>
+                See how it works
+            </button>
+</a>
+</div>
+</div>
+<div class="relative flex items-center justify-center">
+<div class="absolute w-[400px] h-[400px] bg-healing-teal/5 rounded-full blur-[100px]"></div>
+<div class="relative bg-[#18151B] rounded-3xl p-6 border border-white/5 shadow-2xl w-full max-w-md">
+<div class="flex items-center gap-2 mb-6">
+<div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+<span class="ml-2 text-[10px] text-white/30 font-['JetBrains_Mono',monospace] tracking-widest">AGENT_RUNTIME</span>
+</div>
+<div class="space-y-4">
+<div class="bg-white/5 border border-white/10 p-4 rounded-xl flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-healing-teal/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-healing-teal text-lg">medication</span>
+</div>
+<div>
+<p class="text-white text-sm font-semibold">Herceptin dosage confirmed</p>
+<p class="text-white/50 text-xs mt-0.5">Your last dose was 4.0 mg yesterday. Next: Thursday.</p>
+</div>
+</div>
+<div class="bg-white/5 border border-white/10 p-4 rounded-xl flex items-start gap-3 floating-badge">
+<div class="w-9 h-9 rounded-lg bg-alert-crimson/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-alert-crimson text-lg">symptoms</span>
+</div>
+<div>
+<p class="text-white text-sm font-semibold">Nausea reported - logged</p>
+<p class="text-white/50 text-xs mt-0.5">Pattern detected: peaks 6-8h post-infusion.</p>
+</div>
+</div>
+<div class="bg-white/5 border border-white/10 p-4 rounded-xl flex items-start gap-3 opacity-0" id="typing-agent">
+<div class="w-9 h-9 rounded-lg bg-secondary/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-lg">auto_awesome</span>
+</div>
+<div>
+<p class="text-white text-sm"><span class="text-white/40 text-xs">Checking portal for new results...</span><span class="correction-cursor"></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Capabilities Grid -->
+<section class="py-section-gap px-container-padding bg-surface-container-low">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg mb-4">What your <span class="italic font-light text-healing-teal">Agent</span> can do</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Each capability is purpose-built for your oncology journey - private, adaptive, and always learning your context.</p>
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="cap-grid">
+<!-- Gmail -->
+<div class="cap-card bg-white rounded-3xl p-8 border border-outline/5 shadow-sm" style="transition-delay: 0s;">
+<div class="w-14 h-14 rounded-2xl bg-healing-teal/10 flex items-center justify-center mb-6 cap-icon">
+<img src="https://www.gstatic.com/images/branding/product/2x/gmail_2020q4_48dp.png" alt="Gmail" class="w-7 h-7 object-contain" style="filter: brightness(0) saturate(100%) invert(25%) sepia(70%) saturate(500%) hue-rotate(150deg);">
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">Gmail Integration</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Read, draft, and organize emails - with your explicit permission. Never miss a provider message again.</p>
+</div>
+
+<!-- Full Journey Understanding -->
+<div class="cap-card bg-white rounded-3xl p-8 border border-outline/5 shadow-sm" style="transition-delay: 0.1s;">
+<div class="w-14 h-14 rounded-2xl bg-soft-lavender/60 flex items-center justify-center mb-6 cap-icon">
+<span class="material-symbols-outlined text-secondary text-3xl">route</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">Full Journey Map</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Your agent builds a live timeline of your diagnosis, treatments, scans, and appointments - so you always know where you are.</p>
+</div>
+
+<!-- Medications -->
+<div class="cap-card bg-white rounded-3xl p-8 border border-outline/5 shadow-sm" style="transition-delay: 0.15s;">
+<div class="w-14 h-14 rounded-2xl bg-alert-crimson/10 flex items-center justify-center mb-6 cap-icon">
+<span class="material-symbols-outlined text-alert-crimson text-3xl">medication</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">Medication Tracking</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Know every dose, schedule, and interaction. Your agent tracks your full regimen and alerts you to changes.</p>
+</div>
+
+<!-- Symptoms -->
+<div class="cap-card bg-white rounded-3xl p-8 border border-outline/5 shadow-sm" style="transition-delay: 0.2s;">
+<div class="w-14 h-14 rounded-2xl bg-secondary-container/60 flex items-center justify-center mb-6 cap-icon">
+<span class="material-symbols-outlined text-secondary text-3xl">monitor_heart</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">Symptom Monitoring</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Log symptoms by voice or text. Your agent detects patterns and correlations with your treatment cycle automatically.</p>
+</div>
+
+<!-- Local LLM -->
+<div class="cap-card bg-white rounded-3xl p-8 border border-outline/5 shadow-sm" style="transition-delay: 0.3s;">
+<div class="w-14 h-14 rounded-2xl bg-primary/5 border border-primary/10 flex items-center justify-center mb-6 cap-icon">
+<span class="material-symbols-outlined text-healing-teal text-3xl">memory</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">Local LLM Option</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Process everything on-device with a fully local LLM. Your data never leaves your control - <b>100% private by default</b>.</p>
+
+</div>
+
+<!-- Health Portals -->
+<div class="cap-card bg-white rounded-3xl p-8 border border-outline/5 shadow-sm" style="transition-delay: 0.35s;">
+<div class="w-14 h-14 rounded-2xl bg-healing-teal/10 flex items-center justify-center mb-6 cap-icon">
+<span class="material-symbols-outlined text-healing-teal text-3xl">cloud_sync</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">Health Portal Sync</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Connect to MyChart, Epic, HealthConnect, and more. Pull lab results, visit summaries, and upcoming appointments.</p>
+</div>
+
+<!-- Text Requests -->
+<div class="cap-card bg-white rounded-3xl p-8 border border-outline/5 shadow-sm" style="transition-delay: 0.4s;">
+<div class="w-14 h-14 rounded-2xl bg-soft-lavender/60 flex items-center justify-center mb-6 cap-icon">
+<span class="material-symbols-outlined text-secondary text-3xl">forum</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">Request via Text</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Need a refill, an appointment change, or a question for your doctor? Just say it - your agent drafts and sends it securely.</p>
+</div>
+
+<!-- Form Review -->
+<div class="cap-card bg-white rounded-3xl p-8 border border-outline/5 shadow-sm" style="transition-delay: 0.45s;">
+<div class="w-14 h-14 rounded-2xl bg-alert-crimson/10 flex items-center justify-center mb-6 cap-icon">
+<span class="material-symbols-outlined text-alert-crimson text-3xl">description</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">Form Review &amp; Fill</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Upload any medical form. Your agent reviews it, highlights what matters, and helps you fill it - all in plain language.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Quick Walkthrough Section -->
+<section class="py-section-gap px-container-padding bg-surface overflow-hidden">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg mb-4">Three simple steps. <span class="italic font-light text-healing-teal">No learning curve.</span></h2>
+</div>
+
+<div class="grid md:grid-cols-3 gap-8">
+<div class="walkthrough-step p-8 text-center" style="transition-delay: 0s;" data-step="1">
+<div class="w-20 h-20 rounded-full bg-soft-lavender flex items-center justify-center mx-auto mb-6 shadow-lg">
+<span class="material-symbols-outlined text-secondary text-3xl" style="font-variation-settings: 'FILL' 1;">mic</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">1. Speak naturally</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Just talk - messy, fragmented, whatever comes out. Your agent listens and understands context, not just keywords.</p>
+</div>
+
+<div class="walkthrough-step p-8 text-center" style="transition-delay: 0.2s;" data-step="2">
+<div class="w-20 h-20 rounded-full bg-soft-lavender flex items-center justify-center mx-auto mb-6 shadow-lg">
+<span class="material-symbols-outlined text-secondary text-3xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">2. Agent interprets</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Your agent cross-references your words with your journey map, medication schedule, and health portal data to form a complete picture.</p>
+</div>
+
+<div class="walkthrough-step p-8 text-center" style="transition-delay: 0.4s;" data-step="3">
+<div class="w-20 h-20 rounded-full bg-soft-lavender flex items-center justify-center mx-auto mb-6 shadow-lg">
+<span class="material-symbols-outlined text-secondary text-3xl" style="font-variation-settings: 'FILL' 1;">checklist</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">3. Action taken</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Whether it's logging a symptom, drafting a message, or finding a form - your agent handles it and tells you what was done.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Privacy Section -->
+<section class="py-section-gap px-container-padding bg-primary relative overflow-hidden">
+<div class="max-w-5xl mx-auto text-center relative z-10">
+<div class="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-8">
+<span class="material-symbols-outlined text-secondary-fixed text-4xl">lock</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-primary mb-6">Your data. <span class="italic font-light">Your rules.</span></h2>
+<p class="font-body-lg text-body-lg text-on-primary/80 max-w-2xl mx-auto mb-12">
+        Every capability runs with your explicit consent. Choose between cloud agents (with encrypted processing) or a <b>fully local LLM</b> that keeps everything on your device. You are always in control.
+    </p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+<div class="bg-primary-container/40 p-6 rounded-2xl border border-on-primary/10">
+<span class="material-symbols-outlined text-secondary-fixed text-3xl mb-3">gpp_good</span>
+<h4 class="text-on-primary text-sm font-bold">HIPAA Compliant</h4>
+</div>
+<div class="bg-primary-container/40 p-6 rounded-2xl border border-on-primary/10">
+<span class="material-symbols-outlined text-secondary-fixed text-3xl mb-3">encrypted</span>
+<h4 class="text-on-primary text-sm font-bold">End-to-End Encrypted</h4>
+</div>
+<div class="bg-primary-container/40 p-6 rounded-2xl border border-on-primary/10">
+<span class="material-symbols-outlined text-secondary-fixed text-3xl mb-3">offline_bolt</span>
+<h4 class="text-on-primary text-sm font-bold">Local Processing</h4>
+</div>
+<div class="bg-primary-container/40 p-6 rounded-2xl border border-on-primary/10">
+<span class="material-symbols-outlined text-secondary-fixed text-3xl mb-3">visibility_off</span>
+<h4 class="text-on-primary text-sm font-bold">No Data Selling</h4>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-section-gap px-container-padding text-center">
+<div class="max-w-3xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg mb-6">Ready to lighten the load?</h2>
+
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<a href="signup.html">
+<button class="bg-primary text-on-primary px-10 py-5 rounded-full font-headline-md text-headline-md font-bold hover:scale-105 transition-transform shadow-xl">
+                Join the Waitlist
+            </button>
+</a>
+<a href="/">
+<button class="bg-transparent border-2 border-healing-teal text-healing-teal px-10 py-5 rounded-full font-headline-md text-headline-md font-bold hover:bg-healing-teal/5 transition-colors">
+                Back to Home
+            </button>
+</a>
+</div>
+</div>
+</section>
+</main>
+
+<!-- Footer Shell -->
+<footer class="w-full py-20 bg-primary">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding max-w-7xl mx-auto">
+<div class="mb-8 md:mb-0">
+<a href="/" class="font-headline-md text-headline-md text-secondary-fixed mb-2 font-bold flex items-center gap-3">
+<img alt="Rivertide Logo" class="w-10 h-10 object-contain invert brightness-0" src="logo.png">
+            Rivertide
+        </a>
+<p class="font-label-md text-label-md text-on-primary/70">© 2026 Rivertide -- Built by CodeTheCure Labs</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8 md:gap-12">
+<a class="font-body-md text-body-md text-on-primary/70 hover:text-secondary-fixed transition-opacity opacity-80 hover:opacity-100" href="/">Features</a>
+<a class="font-body-md text-body-md text-on-primary/70 hover:text-secondary-fixed transition-opacity opacity-80 hover:opacity-100" href="agents.html">Agents</a>
+<a class="font-body-md text-body-md text-on-primary/70 hover:text-secondary-fixed transition-opacity opacity-80 hover:opacity-100" href="https://www.codethecure.app/" target="_blank" rel="noopener noreferrer">About us</a>
+</div>
+</div>
+</footer>
+
+<script>
+    // Capability card animation on scroll
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.cap-card').forEach(el => observer.observe(el));
+
+    // Walkthrough step animation on scroll
+    const walkthroughObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                walkthroughObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.walkthrough-step').forEach(el => walkthroughObserver.observe(el));
+
+    // Typing effect for the agent panel
+    setTimeout(() => {
+        const typingEl = document.getElementById('typing-agent');
+        if (typingEl) {
+            typingEl.classList.remove('opacity-0');
+            typingEl.classList.add('opacity-100');
+            typingEl.style.transition = 'opacity 0.6s ease';
+        }
+    }, 2000);
+
+    // Cursor blink for the typing agent
+    const style = document.createElement('style');
+    style.textContent = `
+        .correction-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: #94d2c6;
+            animation: blink 0.8s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+</body></html>

@@ -1,0 +1,29 @@
+{
+  "name": "rivertide-website",
+  "version": "1.0.0",
+  "description": "This is a modern, responsive website for Rivertide, a wellness OS for oncology patients that helps manage cognitive impairment during cancer treatment.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeTheCure/rivertide-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/CodeTheCure/rivertide-website/issues"
+  },
+  "homepage": "https://github.com/CodeTheCure/rivertide-website#readme",
+  "dependencies": {
+    "@hono/node-server": "^2.0.6",
+    "@supabase/server": "^1.2.0",
+    "dotenv": "^17.4.2",
+    "hono": "^4.12.27"
+  }
+}

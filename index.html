@@ -1,0 +1,891 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Rivertide | The Wellness OS for Oncology</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Animation Libraries -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#93000a",
+                    "surface-bright": "#fcf9f8",
+                    "inverse-surface": "#313030",
+                    "alert-crimson": "#7F1C34",
+                    "surface-variant": "#e5e2e1",
+                    "healing-teal": "#034F46",
+                    "secondary": "#6a5778",
+                    "surface-container-highest": "#e5e2e1",
+                    "primary-fixed": "#afefe2",
+                    "on-primary-fixed": "#00201c",
+                    "on-tertiary-fixed": "#1b1d11",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#6f5b7d",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#d6bee5",
+                    "secondary-container": "#f0d7ff",
+                    "surface-container": "#f0eded",
+                    "on-primary-fixed-variant": "#055047",
+                    "inverse-on-surface": "#f3f0ef",
+                    "tertiary": "#2f3124",
+                    "surface-container-high": "#eae7e7",
+                    "surface": "#fcf9f8",
+                    "soft-lavender": "#F0D7FF",
+                    "tertiary-fixed": "#e3e4d0",
+                    "surface-dim": "#dcd9d9",
+                    "surface-container-low": "#f6f3f2",
+                    "secondary-fixed": "#f2daff",
+                    "warm-parchment": "#FFFFEB",
+                    "on-secondary-fixed-variant": "#524060",
+                    "outline-variant": "#bfc9c5",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#94d2c6",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#29685f",
+                    "on-primary-container": "#81bfb3",
+                    "background": "#fcf9f8",
+                    "primary-container": "#034f46",
+                    "on-secondary-fixed": "#251432",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#46483a",
+                    "on-tertiary-container": "#b4b5a3",
+                    "on-surface": "#1c1b1b",
+                    "outline": "#6f7976",
+                    "on-background": "#1c1b1b",
+                    "tertiary-container": "#454739",
+                    "primary-fixed-dim": "#94d2c6",
+                    "primary": "#003630",
+                    "on-surface-variant": "#3f4946",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#c7c8b5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "unit": "8px",
+                    "margin-desktop": "64px",
+                    "container-max": "1100px",
+                    "section-gap": "120px",
+                    "container-padding": "40px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["manrope"],
+                    "body-lg": ["manrope"],
+                    "body-md": ["manrope"],
+                    "headline-md": ["manrope"],
+                    "transcript-text": ["manrope"],
+                    "headline-lg": ["manrope"],
+                    "label-caps": ["jetbrainsMono"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "transcript-text": ["22px", {"lineHeight": "36px", "fontWeight": "400"}],
+                    "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #fcf9f8; font-family: 'Manrope', sans-serif; color: #1c1b1b; }
+        .glass-panel { background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .agent-gradient { background: linear-gradient(135deg, #F0D7FF 0%, #afefe2 100%); }
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+        .hero-gradient { background: radial-gradient(circle at 20% 30%, rgba(5, 80, 71, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(240, 215, 255, 0.2) 0%, transparent 50%), #fcf9f8; }
+        .text-glow { text-shadow: 0 0 20px rgba(148, 210, 198, 0.3); }
+        
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .marquee-container { overflow: hidden; position: relative; width: 100%; white-space: nowrap; }
+        .marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
+        
+        /* Perspective Marquee */
+        .perspective-container { perspective: 1000px; }
+        .perspective-marquee { transform: rotateX(15deg) rotateY(-5deg); transform-style: preserve-3d; }
+
+        /* Enhanced Folder Interaction */
+        .folder-container { position: relative; cursor: pointer; transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); perspective: 1200px; }
+        .folder-container:active { transform: scale(0.98); }
+        
+        .folder-back { background: #18151B; height: 320px; width: 440px; border-radius: 20px; position: relative; z-index: 1; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 50px rgba(0,0,0,0.5); overflow: hidden; }
+        
+        .folder-front { 
+            background: #251e29; 
+            height: 280px; 
+            width: 440px; 
+            border-radius: 20px; 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            z-index: 50; 
+            transform-origin: bottom; 
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .folder-container.open .folder-front {
+            transform: rotateX(-45deg);
+        }
+
+        /* Document Burst Animation - pops out from behind the folder door */
+        @keyframes documentBurst {
+            0% { transform: translate(-50%, -50%) scale(0.15) rotate(12deg); opacity: 0; }
+            30% { transform: translate(-50%, -75%) scale(1.08) rotate(-5deg); opacity: 1; }
+            55% { transform: translate(-50%, -45%) scale(0.96) rotate(3deg); opacity: 1; }
+            75% { transform: translate(-50%, -52%) scale(1.01) rotate(-1deg); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
+        }
+        .burst-document {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 40;
+            width: 200px;
+            height: 260px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.15);
+            transform-origin: center center;
+            pointer-events: none;
+            padding: 20px;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+        .folder-container.open .burst-document {
+            animation: documentBurst 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards;
+        }
+
+        .clinical-page { 
+            background: #fff; 
+            position: absolute; 
+            width: 380px; 
+            height: 280px; 
+            left: 30px; 
+            top: 20px; 
+            border-radius: 12px; 
+            opacity: 0; 
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
+            z-index: 10; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            transform: translateY(0) scale(0.95);
+        }
+
+        .folder-container.open .clinical-page { opacity: 1; }
+        .folder-container.open .page-1 { transform: translateY(-110px) rotate(-4deg) scale(1.02); z-index: 30; }
+        .folder-container.open .page-2 { transform: translateY(-70px) rotate(3deg) scale(1.01); z-index: 25; transition-delay: 0.1s; }
+        .folder-container.open .page-3 { transform: translateY(-30px) rotate(-1deg) scale(1); z-index: 20; transition-delay: 0.2s; }
+
+        /* Speech Logic */
+        .speech-item { transition: all 0.3s ease; }
+        .speech-item.cleaned { color: #034f46; font-weight: 600; opacity: 1; }
+        .speech-item.chaotic { opacity: 0.4; font-style: italic; }
+
+        /* Document Drop Animation */
+        @keyframes documentQuickDrop {
+            0% { transform: translateY(0) scale(0.95); opacity: 0; }
+            50% { transform: translateY(-60px) translateX(20px) rotate(-2deg) scale(1.05); opacity: 0.8; }
+            100% { transform: translateY(-110px) rotate(-4deg) scale(1.02); opacity: 1; }
+        }
+        .document-drop { animation: documentQuickDrop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #034f46;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .floating-badge {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Command Mode Console Styles */
+        .console-shadow { box-shadow: 0 50px 100px -20px rgba(0,0,0,0.25), 0 30px 60px -30px rgba(0,0,0,0.3); }
+    
+        /* Voice Agent Demo */
+        .voice-line {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: voiceFadeIn 0.5s ease forwards;
+        }
+        @keyframes voiceFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .voice-line .spoken {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+        .voice-line .action {
+            color: #94d2c6;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .voice-line .action-detail {
+            color: rgba(148,210,198,0.6);
+            font-size: 12px;
+        }
+        .voice-line .check {
+            color: #94d2c6;
+        }
+    </style>
+</head>
+<body class="bg-surface selection:bg-soft-lavender">
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline/5">
+<nav class="flex justify-between items-center px-container-padding h-20 max-w-7xl mx-auto w-full">
+<a href="/" class="font-headline-sm text-headline-sm font-bold text-primary flex items-center gap-2">
+<img alt="Rivertide Logo" class="w-10 h-10 object-contain" src="logo.png">
+            Rivertide
+        </a>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#walkthrough">Features</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="agents.html">Agents</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="https://www.codethecure.app/" target="_blank" rel="noopener noreferrer">About us</a>
+</div>
+<a href="signup.html"><button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-body-md font-bold transition-all duration-200 hover:shadow-lg active:scale-95">
+            Sign up for free
+        </button></a>
+</nav>
+</header>
+<main class="pt-20">
+<!-- Removed the AI Wellness OS Title Section as requested -->
+<!-- High-Impact Hero Section -->
+<section class="relative min-h-[80vh] flex items-center pb-24 overflow-hidden hero-gradient">
+<div class="max-w-7xl mx-auto px-container-padding w-full grid lg:grid-cols-2 gap-10 items-start pt-8 lg:pt-8 transition-all duration-1000 opacity-100 translate-y-0">
+<div class="relative z-10">
+<h1 class="font-headline-lg text-[56px] md:text-[84px] leading-[1.05] tracking-tight mb-8 text-primary">
+                <span class="md:text-[60px]">Intelligence that</span> <br><span class="italic font-bold text-healing-teal text-glow md:text-[72px]">fights with you.</span>
+</h1>
+<p class="font-body-lg text-[22px] text-on-surface-variant max-w-xl mb-12 leading-relaxed">You fight cancer. We do the rest.</p>
+<div class="flex flex-wrap gap-5 mb-16">
+<a href="signup.html"><button class="bg-primary text-on-primary px-10 py-5 rounded-full font-headline-md text-xl font-bold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-primary/10">Try it for free</button></a>
+<a href="watch.html"><button class="flex items-center gap-3 bg-white/50 backdrop-blur-md border border-outline/20 px-8 py-5 rounded-full font-headline-md text-xl font-bold hover:bg-white/80 transition-all">
+<span class="material-symbols-outlined fill-1">play_circle</span>
+                    Watch how it works
+                </button></a>
+</div>
+	
+	<!-- fn keyboard shortcuts -->
+	<div class="flex flex-wrap gap-4 mb-6">
+	<div class="flex items-center gap-3 bg-white/60 border border-outline/10 px-4 py-3 rounded-2xl shadow-sm backdrop-blur-sm">
+	<div class="bg-inverse-surface text-surface w-10 h-10 rounded-lg flex items-center justify-center font-label-caps text-sm border border-white/10 shadow-md">fn</div>
+	<span class="font-body-md text-on-surface-variant text-[15px]">Dictate in &lt;200 ms</span>
+	</div>
+	<div class="flex items-center gap-3 bg-white/60 border border-outline/10 px-4 py-3 rounded-2xl shadow-sm backdrop-blur-sm">
+	<div class="bg-healing-teal text-surface px-3 h-10 rounded-lg flex items-center justify-center font-label-caps text-xs border border-white/10 shadow-md whitespace-nowrap">ctrl + fn</div>
+	<span class="font-body-md text-on-surface-variant text-[15px]">Get work done with agents</span>
+	</div>
+	</div>
+</div>
+		<!-- VOICE_AGENT_RUNTIME Terminal -->
+	<div class="relative flex items-center justify-center w-full">
+	<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] bg-healing-teal/10 rounded-full blur-[100px]"></div>
+	<div class="absolute bottom-0 right-0 w-[200px] h-[200px] bg-soft-lavender/30 rounded-full blur-[80px]"></div>
+	<div class="relative w-full max-w-md">
+	<div class="absolute -inset-1 bg-gradient-to-tr from-healing-teal/20 to-soft-lavender/20 rounded-[2rem] blur opacity-30"></div>
+	<div class="relative bg-[#1a1a2e] rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+	<!-- Terminal Header -->
+	<div class="flex items-center justify-between px-4 pt-4 pb-3 border-b border-white/5">
+	<div class="flex items-center gap-3">
+	<div class="flex gap-1">
+	<div class="w-2.5 h-2.5 rounded-full bg-red-500/40"></div>
+	<div class="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></div>
+	<div class="w-2.5 h-2.5 rounded-full bg-green-500/40"></div>
+	</div>
+	<span class="text-[9px] text-white/30 font-['JetBrains_Mono',monospace] tracking-widest">VOICE_AGENT_RUNTIME</span>
+	</div>
+	<div class="flex items-center gap-2">
+	<span class="w-2 h-2 rounded-full bg-healing-teal animate-pulse"></span>
+	<span class="text-[9px] text-healing-teal/60 font-['JetBrains_Mono',monospace]">ACTIVE</span>
+	</div>
+	</div>
+	<!-- Terminal Body -->
+	<div class="p-4 space-y-2.5" id="hero-agent-log">
+	<!-- items injected by JS -->
+	</div>
+	<!-- Terminal Footer -->
+	<div class="px-4 py-3 border-t border-white/5 flex items-center gap-2">
+	<span class="text-healing-teal font-['JetBrains_Mono',monospace] text-sm">❯</span>
+	<span class="text-xs text-white/40 font-['JetBrains_Mono',monospace]" id="hero-agent-status">Listening via <kbd class="px-1.5 py-0.5 rounded bg-white/5 text-xs">fn</kbd> ...</span>
+	</div>
+	</div>
+	</div>
+</div>
+</div>
+</section>
+<!-- Removed "Intelligent Automation" section as requested -->
+<!-- How it works (simplified) -->
+<section class="py-20 px-container-padding bg-surface-container-low relative overflow-hidden">
+<div class="max-w-5xl mx-auto">
+<div class="text-center mb-14">
+<h2 class="font-headline-lg text-headline-lg mb-4">Speak. <span class="italic font-light text-healing-teal">It handles the rest.</span></h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Say what you need. Rivertide listens, understands, and acts - logging symptoms, checking schedules, or drafting messages.</p>
+</div>
+
+<div class="grid md:grid-cols-3 gap-6">
+<div class="bg-white rounded-2xl p-8 border border-outline/5 shadow-sm text-center">
+<div class="w-16 h-16 rounded-full bg-soft-lavender/60 flex items-center justify-center mx-auto mb-5">
+<span class="material-symbols-outlined text-secondary text-3xl">mic</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2">1. Speak</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Just talk naturally - messy speech, pauses, whatever comes out.</p>
+</div>
+<div class="bg-white rounded-2xl p-8 border border-outline/5 shadow-sm text-center">
+<div class="w-16 h-16 rounded-full bg-healing-teal/10 flex items-center justify-center mx-auto mb-5">
+<span class="material-symbols-outlined text-healing-teal text-3xl">psychology</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2">2. Understand</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Your agent interprets context - meds, symptoms, appointments, everything.</p>
+</div>
+<div class="bg-white rounded-2xl p-8 border border-outline/5 shadow-sm text-center">
+<div class="w-16 h-16 rounded-full bg-alert-crimson/10 flex items-center justify-center mx-auto mb-5">
+<span class="material-symbols-outlined text-alert-crimson text-3xl">checklist</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2">3. Act</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Logs symptoms, updates your care team, or drafts responses - done.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Problem Section: Chemo Brain -->
+<section class="py-section-gap px-container-padding bg-surface-container-low">
+<div class="max-w-7xl mx-auto transition-all duration-1000 opacity-100 translate-y-0">
+<div class="grid md:grid-cols-2 gap-20 items-center">
+<div>
+<h2 class="font-headline-lg text-headline-lg mb-6">Fighting cancer is hard. Managing it shouldnt be.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 leading-relaxed"><b>75% of cancer patients experience cognitive impairment</b> during treatment. Why? It's due to the <u>overwhelming friction</u> of learning complex medical jargon, rigid medication schedules, and doctor appointments while you're exhausted.
+                </p>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-error-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-error-container">cloud_off</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md mb-1">Foggy Memory</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Struggling to remember side effects during the high-pressure 15-minute window with your oncologist.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary">psychology</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md mb-1">Cognitive Fatigue</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Spending hours frantically trying to understand your medical reports or diagnosis when you really should be resting.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative">
+<div class="aspect-square rounded-3xl overflow-hidden glass-panel p-1 border border-outline/10">
+<div class="w-full h-full bg-cover bg-center rounded-2xl" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAtlsSnScc8LyK01nqO_NYDekRKUZjjedaygvh0Vi2ae-_HGu8Tt30K4Y-C8HYAlXkf353SDMypHJtWs5TUe-j-QBrr_bpQqa2TfJEO9hBjGmgAPR07oJc-EJIb6p2FCwxYLCUbYDJJCLUh_LvR3VGKXO0jxNUU5njlLAoeRRrICZoTW5IblucrRWRFIutigzukg_LluBiwlKu6GftUlclfOyjqd5SdzrZN0Fju08qePPGcemg91JMlQJsDNF4ao5xDZ1FRJCEGBg-n8l8&quot;);"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Workflow Walkthrough -->
+<section class="py-section-gap px-container-padding overflow-hidden" id="walkthrough">
+<div class="max-w-7xl mx-auto transition-all duration-1000 opacity-100 translate-y-0">
+<div class="text-center mb-20">
+<h2 class="font-headline-lg text-headline-lg mb-4"><i>Beat chemobrain</i> with <span style="font-weight: normal;" class="">Rivertide</span></h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">A secure, <b>agentic voice-as-an-OS </b>tool to streamline <b>productivity</b> and save hours of your time</p>
+</div>
+<div class="space-y-32">
+<!-- Step 1: Dictation -->
+<div class="grid md:grid-cols-2 gap-16 items-center">
+<div class="order-2 md:order-1 rounded-3xl overflow-hidden shadow-2xl border border-outline/10">
+<img alt="Product Interface" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAH0d4zohZwsQ7ON_iCGSNKmQEp4TohEkLRMc8Tf4e3qQcSixKQyx2v-hgUCGK6Pf4Wp30O9FWed5Y1d61oo2mj6VUsmhK5aq4c3D94E82rFs8qO2Nn0zH5RMLI41QbJlh9QTsv4sVNFR_fuveRICN09YlNrNbNRv1wj2A1lBe_INUHOwnOt_JZjvepFF-tJpYfi1qCXdIdMAGqhFixmvn7bjI-thoiNk6gLlKzNQnFI40luSnCUMGtDWNI76ydP6aWPBAdmKkf6ZwI">
+</div>
+<div class="order-1 md:order-2">
+<kbd class="px-4 py-2 bg-inverse-surface text-surface rounded-lg font-label-caps text-[16px] mb-6 inline-block">fn</kbd>
+<h3 class="font-headline-lg text-headline-md mb-4">Agentic Dictation</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Don\'t worry about finding the right words. <b>Just speak.</b> Rivertide smartly transforms messy speech into clean and simple text and pastes it into the text field. Write that email, appeal, or family updates at <u>4x speed</u>.</p>
+</div>
+</div>
+<!-- NEW Step 2: Command Mode (Requested Addition) -->
+<div class="grid md:grid-cols-2 gap-16 items-center">
+<div class="order-1">
+<kbd class="px-4 py-2 bg-healing-teal text-surface rounded-lg font-label-caps text-[16px] mb-6 inline-block">ctrl + fn</kbd>
+<h3 class="font-headline-lg text-headline-md mb-4">Command Mode</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6"><b>Your personal agent</b> with integrations. Use it to finish <b>complex tasks with a single voice command</b>. Recall that side effect, schedule calls on your calendar, or pull up your last PET scan results instantly and securely!</p>
+</div>
+<div class="order-2 relative">
+<div class="bg-[#18151B] rounded-3xl p-8 console-shadow border border-white/5 relative overflow-hidden min-h-[400px]">
+<!-- UI Elements -->
+<div class="flex items-center justify-between mb-8">
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+</div>
+
+</div>
+<div class="space-y-6">
+<!-- Card 1 -->
+<div class="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-xl flex items-start gap-4 transform translate-x-4">
+<div class="w-10 h-10 rounded-full bg-alert-crimson/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-alert-crimson">warning</span>
+</div>
+<div>
+<h4 class="text-white font-bold text-sm mb-1">Your last dose for Herceptin was <u>4.0 mg</u>, taken yesterday</h4>
+<p class="text-white/60 text-xs leading-relaxed">I noticed (on your calendar) your call with Dr. Shen on the new dosage.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-xl flex items-start gap-4 transform -translate-x-2">
+<div class="w-10 h-10 rounded-full bg-healing-teal/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-healing-teal">calendar_month</span>
+</div>
+<div>
+<h4 class="text-white font-bold text-sm mb-1">Follow-up call confirmed for Thursday 2:30 PM</h4>
+<p class="text-white/60 text-xs leading-relaxed">"Herceptin dosage" clarification added to question list for your call.&nbsp;</p>
+</div>
+</div>
+<!-- Command Line -->
+<div class="mt-12 flex items-center gap-3 border-t border-white/5 pt-8">
+<span class="text-healing-teal font-label-caps text-sm">/</span>
+<span class="text-white/80 font-body-md animate-pulse">What was my last dosage of Herceptin again?</span>
+</div>
+</div>
+<!-- Accent Gradients -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-healing-teal/10 blur-[80px] rounded-full"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary/10 blur-[80px] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Agentic Memory Section: Interactive Folder -->
+<section class="py-section-gap px-container-padding bg-primary relative overflow-hidden">
+<div class="relative z-10 max-w-7xl mx-auto text-center flex flex-col items-center transition-all duration-1000 opacity-100 translate-y-0">
+<h2 class="font-headline-lg text-headline-lg text-on-primary mb-6">A Personal Assistant That <span style="font-weight: normal;" class=""><i>Remembers For You</i></span>.</h2>
+<p class="font-body-lg text-body-lg text-on-primary/80 max-w-3xl mx-auto mb-16">
+            Rivertide builds a secure, encrypted knowledge graph of your journey. Every self-note and detail is mapped, making your experience personalized with full control.</p>
+<!-- Interactive Folder Component -->
+<div class="folder-container mb-24" id="memory-folder" >
+<div class="folder-back">
+<div class="absolute top-6 left-6 flex gap-2">
+<div class="w-3 h-3 rounded-full bg-red-500/30"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/30"></div>
+<div class="w-3 h-3 rounded-full bg-green-500/30"></div>
+</div>
+<div class="absolute bottom-8 left-8 text-left">
+<p class="text-white/40 font-label-caps text-[11px] mb-1 tracking-widest">ENCRYPTED STORAGE</p>
+<p class="text-white font-headline-md text-lg">PATIENT_SECURE_VAULT_V1</p>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-healing-teal/10 to-transparent pointer-events-none"></div>
+</div>
+<!-- Documents in Folder -->
+<div class="clinical-page page-3 p-8 text-left border border-outline/10">
+<div class="flex items-center gap-3 mb-6">
+<div class="bg-healing-teal/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-healing-teal text-xl">description</span>
+</div>
+<span class="font-bold text-primary text-md">Pathology Report</span>
+</div>
+<div class="space-y-4">
+<div class="h-2 w-full bg-surface-container-high rounded-full"></div>
+<div class="h-2 w-3/4 bg-surface-container-high rounded-full"></div>
+<div class="h-2 w-5/6 bg-surface-container-high rounded-full"></div>
+</div>
+</div>
+<div class="clinical-page page-2 p-8 text-left border border-outline/10">
+<div class="flex items-center gap-3 mb-6">
+<div class="bg-secondary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-secondary text-xl">assignment</span>
+</div>
+<span class="font-bold text-primary text-md">Insurance Claim #8821</span>
+</div>
+<div class="space-y-4">
+<div class="h-2 w-full bg-surface-container-high rounded-full"></div>
+<div class="h-2 w-1/2 bg-surface-container-high rounded-full"></div>
+</div>
+</div>
+<div class="clinical-page page-1 p-8 text-left border border-outline/10">
+<div class="flex items-center gap-3 mb-6">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-healing-teal text-xl">medical_services</span>
+</div>
+<span class="font-bold text-primary text-md">Clinical Notes</span>
+</div>
+<div class="space-y-4">
+<div class="h-2 w-full bg-surface-container-high rounded-full"></div>
+<div class="h-2 w-2/3 bg-surface-container-high rounded-full"></div>
+</div>
+<div class="mt-8 p-4 bg-healing-teal/5 border border-healing-teal/10 rounded-xl">
+<p class="text-[12px] text-healing-teal italic leading-relaxed">"Patient reports improved tolerance. Optimized rest cycle recommended."</p>
+</div>
+</div>
+<!-- Burst document that pops out from the folder -->
+<div class="burst-document">
+<div class="flex items-center gap-2 mb-4">
+<div class="bg-healing-teal/10 p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-healing-teal text-lg">description</span>
+</div>
+<span class="text-sm font-bold text-primary">Quick Note</span>
+</div>
+<div class="space-y-2.5">
+<div class="h-1.5 w-full bg-surface-container-high rounded-full"></div>
+<div class="h-1.5 w-4/5 bg-surface-container-high rounded-full"></div>
+<div class="h-1.5 w-3/4 bg-surface-container-high rounded-full"></div>
+<div class="h-1.5 w-5/6 bg-surface-container-high rounded-full"></div>
+<div class="h-1.5 w-2/3 bg-surface-container-high rounded-full"></div>
+</div>
+<div class="mt-5 pt-4 border-t border-surface-container-high/50 flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-healing-teal/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-healing-teal text-xs">check</span>
+</div>
+<span class="text-[9px] text-healing-teal font-bold tracking-[0.15em]">AUTO-SAVED TO VAULT</span>
+</div>
+</div>
+
+<div class="folder-front flex items-center justify-center">
+<div class="text-center">
+<div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4 mx-auto backdrop-blur-sm border border-white/10">
+<span class="material-symbols-outlined text-white/50 text-3xl">lock</span>
+</div>
+<p class="text-white/60 font-label-caps text-xs tracking-[0.2em]">Your Files</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 w-full">
+<div class="bg-primary-container/40 p-6 rounded-2xl border border-on-primary/10 backdrop-blur-md">
+<span class="material-symbols-outlined text-secondary-fixed text-4xl mb-4">hub</span>
+<h4 class="text-on-primary font-headline-md text-body-md mb-2">Connected Data</h4>
+</div>
+<div class="bg-primary-container/40 p-6 rounded-2xl border border-on-primary/10 backdrop-blur-md">
+<span class="material-symbols-outlined text-secondary-fixed text-4xl mb-4">encrypted</span>
+<h4 class="text-on-primary font-headline-md text-body-md mb-2">HIPAA Secure</h4>
+</div>
+<div class="bg-primary-container/40 p-6 rounded-2xl border border-on-primary/10 backdrop-blur-md">
+<span class="material-symbols-outlined text-secondary-fixed text-4xl mb-4">auto_awesome</span>
+<h4 class="text-on-primary font-headline-md text-body-md mb-2">Context Aware Agents</h4>
+</div>
+<div class="bg-primary-container/40 p-6 rounded-2xl border border-on-primary/10 backdrop-blur-md">
+<span class="material-symbols-outlined text-secondary-fixed text-4xl mb-4">history</span>
+<h4 class="text-on-primary font-headline-md text-body-md mb-2">You have full control</h4>
+</div>
+</div>
+</div>
+</section>
+<!-- Cognitive Health Monitor -->
+<section class="py-section-gap px-container-padding">
+<div class="max-w-7xl mx-auto transition-all duration-1000 opacity-100 translate-y-0">
+<div class="bento-grid">
+<div class="col-span-12 md:col-span-8 bg-surface-container-high rounded-3xl p-10 flex flex-col justify-between">
+<div>
+<h3 class="font-headline-lg text-headline-lg mb-4">Track Mental Health, <span style="font-weight: normal;" class="">pain-free</span></h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-xl">
+                        Rivertide uses <b>sub-audible voice analytics</b> to track linguistic markers of cognitive fatigue. We <b>alert you before the "fog"</b> settles in so you know what to expect.</p>
+</div>
+<div class="h-48 w-full bg-white/50 rounded-2xl p-6 relative overflow-hidden">
+<div class="flex items-end gap-1 h-full opacity-30">
+<div class="flex-1 bg-healing-teal rounded-t" style="height: 40%"></div>
+<div class="flex-1 bg-healing-teal rounded-t" style="height: 60%"></div>
+<div class="flex-1 bg-healing-teal rounded-t" style="height: 30%"></div>
+<div class="flex-1 bg-healing-teal rounded-t" style="height: 80%"></div>
+<div class="flex-1 bg-alert-crimson rounded-t" style="height: 95%"></div>
+<div class="flex-1 bg-alert-crimson rounded-t" style="height: 90%"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="glass-panel px-6 py-4 rounded-full border border-alert-crimson flex items-center gap-3 shadow-xl">
+<span class="material-symbols-outlined text-alert-crimson">warning</span>
+<span class="font-headline-md text-body-md text-alert-crimson font-bold">HIGH cognitive load</span>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-12 md:col-span-4 bg-soft-lavender rounded-3xl p-10 flex flex-col items-center text-center justify-center border border-secondary/10">
+<div class="w-24 h-24 rounded-full bg-white mb-6 flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-healing-teal text-4xl" style="font-variation-settings: 'FILL' 1;">bedtime</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-4 text-healing-teal">Advised: Take a 20m Nap</h4>
+<p class="font-body-md text-body-md text-on-secondary-fixed-variant">
+                    Rivertide is built with automatic mental health tracking just for you. Measure cognitive response to your treatment to discuss with your doctor. <b>100% private</b>.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Adaptive Agents Section -->
+<section class="py-section-gap px-container-padding bg-surface-container-low" id="support">
+<div class="max-w-4xl mx-auto transition-all duration-1000 opacity-100 translate-y-0">
+<div class="text-center mb-12">
+<h2 class="font-headline-lg text-headline-lg mb-4">Adaptive Agents</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8">A chat interface with adaptive UI based on your cognitive fatigue levels.</p>
+<!-- Cognitive Load Slider -->
+<div class="max-w-xs mx-auto flex flex-col gap-2 mb-12">
+<div class="flex justify-between font-label-caps text-[10px] text-on-surface-variant">
+<span class="">Focused</span>
+<span class="">Foggy</span>
+</div>
+<input class="w-full h-2 bg-surface rounded-lg appearance-none cursor-pointer accent-healing-teal" id="cognitive-slider" max="100" min="0" step="1" type="range" value="20">
+<p class="font-label-caps text-[10px] text-healing-teal mt-1">The dashboard adapts to how you think.</p>
+</div>
+</div>
+<div class="glass-panel rounded-3xl border border-outline/10 shadow-2xl overflow-hidden h-[600px] flex flex-col">
+<!-- Chat Header -->
+<div class="p-6 border-b border-outline/10 flex items-center justify-between bg-white/50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full agent-gradient flex items-center justify-center overflow-hidden border border-white/20">
+<img alt="Logo" class="w-8 h-8 object-contain" src="logo.png">
+</div>
+<div>
+<p class="font-headline-md text-body-md font-bold">Rivertide Agent</p>
+<p class="text-[10px] text-on-surface-variant font-label-caps tracking-widest opacity-60">just a demo...</p>
+</div>
+</div>
+
+</div>
+<!-- Chat Messages -->
+<div class="flex-1 p-8 space-y-6 overflow-y-auto bg-surface/30" id="chat-messages">
+<div class="flex justify-end">
+<div class="bg-healing-teal text-white px-6 py-4 rounded-2xl rounded-tr-none max-w-[80%]">
+<p class="font-body-md" id="user-msg">"I'm feeling overwhelmed with all these diagnosis papers. What do I actually need to do today?"</p>
+</div>
+</div>
+<div class="flex justify-start">
+<div class="bg-white border border-outline-variant px-6 py-4 rounded-2xl rounded-tl-none max-w-[80%] shadow-sm">
+<p class="font-body-md text-on-surface mb-3" id="agent-msg-intro">I've scanned the 14 pages. There is only one high-priority task for you:</p>
+<div class="bg-soft-lavender/40 p-4 rounded-xl border border-soft-lavender flex items-center gap-4" id="task-card">
+<span class="material-symbols-outlined text-secondary">signature</span>
+<p class="font-body-md font-bold text-on-surface">Sign the Prior Authorization on page 3.</p>
+</div>
+<div class="hidden mt-3 pt-3 border-t border-outline/5" id="complex-details">
+<p class="text-[13px] text-on-surface-variant mb-2">The authorization refers to the HCPCS code J9312 for your next infusion cycle. I've cross-referenced this with your provider network, and it is fully covered.</p>
+<div class="flex gap-2">
+<button class="text-[11px] font-bold text-healing-teal underline">View full analysis</button>
+<button class="text-[11px] font-bold text-healing-teal underline">Download PDF</button>
+</div>
+</div>
+<p class="font-body-md text-on-surface mt-3" id="agent-msg-outro">I've handled the rest of the scanning and added a breakdown to your Google Docs. Ready to rest?</p>
+</div>
+</div>
+</div>
+<!-- Chat Input -->
+<div class="p-6 bg-white/50 border-t border-outline/10">
+<div class="relative">
+<input class="w-full bg-surface p-4 pr-16 rounded-2xl border-2 border-outline-variant focus:border-healing-teal focus:ring-0 font-body-md transition-all" placeholder="Type or use 'fn' to speak..." type="text">
+<button class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-healing-teal text-white flex items-center justify-center">
+<span class="material-symbols-outlined">mic</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Perspective Marquee Section -->
+<section class="py-20 bg-surface border-t border-outline/5 overflow-hidden">
+<div class="max-w-7xl mx-auto px-container-padding transition-all duration-1000 opacity-100 translate-y-0">
+<p class="text-center font-label-caps text-[11px] text-on-surface-variant mb-12 tracking-[0.2em]">Integrates with</p>
+<div class="perspective-container flex justify-center">
+<div class="perspective-marquee w-full max-w-5xl">
+<div class="marquee-container relative">
+<div class="marquee-content flex gap-20 items-center grayscale opacity-50">
+<span class="font-headline-md text-2xl font-bold tracking-tight">HealthConnect</span>
+<span class="font-headline-md text-2xl font-bold tracking-tight">Epic</span>
+<span class="font-headline-md text-2xl font-bold tracking-tight">MyChart</span>
+<span class="font-headline-md text-2xl font-bold tracking-tight">Oscar</span>
+<span class="font-headline-md text-2xl font-bold tracking-tight">Humana</span>
+<span class="font-headline-md text-2xl font-bold tracking-tight">HealthConnect</span>
+<span class="font-headline-md text-2xl font-bold tracking-tight">Epic</span>
+<span class="font-headline-md text-2xl font-bold tracking-tight">MyChart</span>
+<span class="font-headline-md text-2xl font-bold tracking-tight">Oscar</span>
+<span class="font-headline-md text-2xl font-bold tracking-tight">Humana</span>
+</div>
+<div class="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-surface to-transparent z-10"></div>
+<div class="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-surface to-transparent z-10"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-section-gap px-container-padding text-center">
+<div class="max-w-3xl mx-auto transition-all duration-1000 opacity-100 translate-y-0">
+<h2 class="font-headline-lg text-headline-lg mb-6">Stop managing. Start healing.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10">
+            Join 1,200+ patients who save an average of 14 hours a week on medical administration.
+        </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<a href="signup.html"><button class="bg-primary text-on-primary px-10 py-5 rounded-full font-headline-md text-headline-md font-bold hover:scale-105 transition-transform shadow-xl">
+                Start Your 14-Day Calm
+            </button></a>
+<a href="watch.html"><button class="bg-transparent border-2 border-healing-teal text-healing-teal px-10 py-5 rounded-full font-headline-md text-headline-md font-bold hover:bg-healing-teal/5 transition-colors">
+                View Demo
+            </button></a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Shell -->
+<footer class="w-full py-20 bg-primary">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding max-w-7xl mx-auto">
+<div class="mb-8 md:mb-0">
+<a href="/" class="font-headline-md text-headline-md text-secondary-fixed mb-2 font-bold flex items-center gap-3">
+<img alt="Rivertide Logo" class="w-10 h-10 object-contain invert brightness-0" src="logo.png">
+                Rivertide
+            </a>
+<p class="font-label-md text-label-md text-on-primary/70">© 2026 Rivertide -- Built by CodeTheCure Labs</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8 md:gap-12">
+<a class="font-body-md text-body-md text-on-primary/70 hover:text-secondary-fixed transition-opacity opacity-80 hover:opacity-100" href="#">Features</a>
+<a class="font-body-md text-body-md text-on-primary/70 hover:text-secondary-fixed transition-opacity opacity-80 hover:opacity-100" href="agents.html">Agents</a>
+<a class="font-body-md text-body-md text-on-primary/70 hover:text-secondary-fixed transition-opacity opacity-80 hover:opacity-100" href="https://www.codethecure.app/" target="_blank" rel="noopener noreferrer">About us</a>
+</div>
+</div>
+</footer>
+<script>
+    // Cognitive Slider Logic
+    const slider = document.getElementById('cognitive-slider');
+    const complexDetails = document.getElementById('complex-details');
+    const agentIntro = document.getElementById('agent-msg-intro');
+    
+    slider.addEventListener('input', (e) => {
+        const val = e.target.value;
+        if (val > 60) {
+            complexDetails.classList.add('hidden');
+            agentIntro.innerText = "I've handled the paperwork. You have one simple task:";
+        } else {
+            complexDetails.classList.remove('hidden');
+            agentIntro.innerText = "I've scanned the 14 pages. There is only one high-priority task for you:";
+        }
+    });
+
+    // Intersection Observer for sections
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+                entry.target.classList.remove('opacity-0', 'translate-y-10');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('section > div').forEach(el => {
+        el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+        observer.observe(el);
+    });
+
+
+
+    // Folder interaction - toggle open/close
+    const memoryFolder = document.getElementById('memory-folder');
+    if(memoryFolder) {
+        const burstDoc = memoryFolder.querySelector('.burst-document');
+        memoryFolder.addEventListener('click', function() {
+            const wasOpen = this.classList.contains('open');
+            this.classList.toggle('open');
+            // Reset burst-document so the animation replays on each open
+            if (!wasOpen && burstDoc) {
+                burstDoc.style.animation = 'none';
+                void burstDoc.offsetHeight; // force reflow
+                burstDoc.style.animation = '';
+            }
+        });
+    }
+
+
+	    // Hero Terminal Voice Agent Demo - cycles through voice commands
+    const heroVoiceLines = [
+        [
+            { type: 'spoken', text: '"Umm... I think my nausea is worse today... like... after the chemo?"' },
+            { type: 'action', text: 'Logged symptom: Nausea (moderate, post-infusion pattern detected)' },
+            { type: 'detail', text: 'Added to timeline for Dr. Shen.' },
+        ],
+        [
+            { type: 'spoken', text: '"What was that thing the doctor said about my potassium?"' },
+            { type: 'action', text: 'Cross-referenced visit summary: Potassium low (3.2 mEq/L)' },
+            { type: 'detail', text: 'Flagged for follow-up.' },
+        ],
+        [
+            { type: 'spoken', text: '"Remind me when my next Herceptin dose is..."' },
+            { type: 'action', text: 'Found: Next Herceptin dose Thursday 2:30 PM' },
+            { type: 'detail', text: 'Calendar alert set.' },
+        ],
+        [
+            { type: 'spoken', text: '"I need to tell my doctor about the dizzy spells..."' },
+            { type: 'action', text: 'Drafted message to Dr. Shen: new-onset dizziness' },
+            { type: 'detail', text: 'Ready to send in your inbox.' },
+        ],
+    ];
+
+    let heroLineIdx = 0;
+    const heroLog = document.getElementById('hero-agent-log');
+    const heroStatus = document.getElementById('hero-agent-status');
+
+    async function showHeroDemo() {
+        const lines = heroVoiceLines[heroLineIdx % heroVoiceLines.length];
+        heroLineIdx++;
+
+        heroLog.innerHTML = '';
+        heroStatus.innerHTML = 'Heard: processing...';
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            const div = document.createElement('div');
+            div.className = 'voice-line flex items-start gap-3 bg-white/5 border border-white/5 p-4 rounded-xl';
+
+            if (line.type === 'spoken') {
+                heroStatus.innerHTML = 'Heard: processing...';
+                div.innerHTML = '<span class="material-symbols-outlined text-white/30 text-lg shrink-0">mic</span>'
+                    + '<span class="spoken">' + line.text + '</span>';
+            } else if (line.type === 'action') {
+                heroStatus.innerHTML = 'Agent acting...';
+                div.innerHTML = '<span class="material-symbols-outlined text-healing-teal text-lg shrink-0">auto_awesome</span>'
+                    + '<span class="action">' + line.text + '</span>';
+                await new Promise(r => setTimeout(r, 1000));
+            } else if (line.type === 'detail') {
+                heroStatus.innerHTML = 'Done. Listening...';
+                div.innerHTML = '<span class="material-symbols-outlined text-healing-teal/50 text-lg shrink-0">check_circle</span>'
+                    + '<span class="action-detail">' + line.text + '</span>';
+                await new Promise(r => setTimeout(r, 400));
+            }
+
+            heroLog.appendChild(div);
+            await new Promise(r => setTimeout(r, 600 + Math.random() * 400));
+        }
+
+        await new Promise(r => setTimeout(r, 2000));
+        heroStatus.innerHTML = 'Listening via <kbd class="px-1.5 py-0.5 rounded bg-white/5 text-xs">fn</kbd> ...';
+        setTimeout(showHeroDemo, 500);
+    }
+
+    setTimeout(showHeroDemo, 1200);</script>
+
+
+
+
+
+
+</body></html>
