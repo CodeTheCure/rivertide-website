@@ -82,13 +82,13 @@
                     "container-padding": "40px"
             },
             "fontFamily": {
-                    "headline-lg-mobile": ["manrope"],
-                    "body-lg": ["manrope"],
-                    "body-md": ["manrope"],
-                    "headline-md": ["manrope"],
-                    "transcript-text": ["manrope"],
-                    "headline-lg": ["manrope"],
-                    "label-caps": ["jetbrainsMono"]
+                    "headline-lg-mobile": ["Manrope", "sans-serif"],
+                    "body-lg": ["Manrope", "sans-serif"],
+                    "body-md": ["Manrope", "sans-serif"],
+                    "headline-md": ["Manrope", "sans-serif"],
+                    "transcript-text": ["Manrope", "sans-serif"],
+                    "headline-lg": ["Manrope", "sans-serif"],
+                    "label-caps": ["JetBrains Mono", "monospace"]
             },
             "fontSize": {
                     "headline-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
@@ -111,37 +111,37 @@
         .hero-gradient { background: radial-gradient(circle at 20% 30%, rgba(5, 80, 71, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(240, 215, 255, 0.2) 0%, transparent 50%), #fcf9f8; }
         .text-glow { text-shadow: 0 0 20px rgba(148, 210, 198, 0.3); }
         
-        /* Marquee Animation */
+        /* Seamless marquee: two identical groups, track slides one group-width */
         @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            to { transform: translateX(-50%); }
         }
-        .marquee-container { overflow: hidden; position: relative; width: 100%; white-space: nowrap; }
-        .marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
-        
-        /* Perspective Marquee */
-        .perspective-container { perspective: 1000px; }
-        .perspective-marquee { transform: rotateX(15deg) rotateY(-5deg); transform-style: preserve-3d; }
+        .marquee-container { overflow: hidden; position: relative; width: 100%; }
+        .marquee-content { display: flex; width: max-content; animation: marquee 26s linear infinite; }
+        .marquee-group { display: flex; align-items: center; gap: 5rem; padding-right: 5rem; }
+        .marquee-container:hover .marquee-content { animation-play-state: paused; }
+        @media (prefers-reduced-motion: reduce) {
+            .marquee-content { animation: none; }
+        }
 
         /* Enhanced Folder Interaction */
         .folder-container { position: relative; cursor: pointer; transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); perspective: 1200px; }
         .folder-container:active { transform: scale(0.98); }
         
-        .folder-back { background: #18151B; height: 320px; width: 440px; border-radius: 20px; position: relative; z-index: 1; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 50px rgba(0,0,0,0.5); overflow: hidden; }
-        
-        .folder-front { 
-            background: #251e29; 
-            height: 280px; 
-            width: 440px; 
-            border-radius: 20px; 
-            position: absolute; 
-            bottom: 0; 
-            left: 0; 
-            z-index: 50; 
-            transform-origin: bottom; 
-            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            border: 1px solid rgba(255,255,255,0.15);
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+        .folder-back { background: linear-gradient(180deg, #eef5f3 0%, #d9eae5 100%); height: 320px; width: 440px; border-radius: 20px; position: relative; z-index: 1; border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 24px 60px rgba(0,15,13,0.45), inset 0 1px 0 rgba(255,255,255,0.9); overflow: hidden; }
+
+        .folder-front {
+            background: linear-gradient(180deg, #fbf8ff 0%, #ead9f7 100%);
+            height: 280px;
+            width: 440px;
+            border-radius: 20px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 50;
+            transform-origin: bottom;
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 -5px 15px rgba(0,20,17,0.15), inset 0 1px 0 rgba(255,255,255,0.9);
         }
         
         .folder-container.open .folder-front {
@@ -210,14 +210,41 @@
         }
         .document-drop { animation: documentQuickDrop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
 
-        input[type="range"]::-webkit-slider-thumb {
+        /* Cognitive load slider */
+        .cognitive-slider {
             -webkit-appearance: none;
             appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #034f46;
+            width: 100%;
+            height: 10px;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #94d2c6 0%, #afefe2 35%, #F0D7FF 70%, #d6bee5 100%);
+            box-shadow: inset 0 1px 3px rgba(0, 20, 17, 0.12);
+            outline: none;
             cursor: pointer;
+        }
+        .cognitive-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
+            background: #fff;
+            border: 4px solid var(--thumb-color, #034f46);
+            box-shadow: 0 2px 8px rgba(0, 20, 17, 0.25), 0 0 0 6px var(--thumb-glow, rgba(3, 79, 70, 0.12));
+            cursor: grab;
+            transition: transform 0.15s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+        .cognitive-slider::-webkit-slider-thumb:hover { transform: scale(1.12); }
+        .cognitive-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.05); }
+        .cognitive-slider::-moz-range-thumb {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #fff;
+            border: 4px solid var(--thumb-color, #034f46);
+            box-shadow: 0 2px 8px rgba(0, 20, 17, 0.25), 0 0 0 6px var(--thumb-glow, rgba(3, 79, 70, 0.12));
+            cursor: grab;
+            transition: transform 0.15s ease, border-color 0.35s ease, box-shadow 0.35s ease;
         }
 
         .floating-badge {
@@ -241,20 +268,20 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .voice-line .spoken {
-            color: rgba(255,255,255,0.6);
+            color: #3f4946;
             font-size: 14px;
         }
         .voice-line .action {
-            color: #94d2c6;
+            color: #034f46;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
         }
         .voice-line .action-detail {
-            color: rgba(148,210,198,0.6);
+            color: rgba(3,79,70,0.65);
             font-size: 12px;
         }
         .voice-line .check {
-            color: #94d2c6;
+            color: #034f46;
         }
     </style>
 </head>
@@ -294,13 +321,17 @@
 </div>
 	
 	<!-- fn keyboard shortcuts -->
-	<div class="flex flex-wrap gap-4 mb-6">
+	<div class="flex flex-wrap gap-4 mb-6" data-stagger>
 	<div class="key-chip">
 	<span class="keycap keycap--md" data-autopress>fn</span>
 	<span class="font-body-md text-on-surface-variant text-[15px]">Dictate in &lt;200 ms</span>
 	</div>
 	<div class="key-chip">
-	<span class="keycap keycap--teal keycap--md whitespace-nowrap" data-autopress>ctrl + fn</span>
+	<span class="keycap-combo" data-autopress>
+	<span class="keycap keycap--teal keycap--md">ctrl</span>
+	<span class="keycap-plus">+</span>
+	<span class="keycap keycap--teal keycap--md">fn</span>
+	</span>
 	<span class="font-body-md text-on-surface-variant text-[15px]">Get work done with agents</span>
 	</div>
 	</div>
@@ -309,32 +340,24 @@
 	<div class="relative flex items-center justify-center w-full">
 	<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] bg-healing-teal/10 rounded-full blur-[100px]"></div>
 	<div class="absolute bottom-0 right-0 w-[200px] h-[200px] bg-soft-lavender/30 rounded-full blur-[80px]"></div>
-	<div class="relative w-full max-w-md">
-	<div class="absolute -inset-1 bg-gradient-to-tr from-healing-teal/20 to-soft-lavender/20 rounded-[2rem] blur opacity-30"></div>
-	<div class="relative bg-[#1a1a2e] rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
-	<!-- Terminal Header -->
-	<div class="flex items-center justify-between px-4 pt-4 pb-3 border-b border-white/5">
-	<div class="flex items-center gap-3">
-	<div class="flex gap-1">
-	<div class="w-2.5 h-2.5 rounded-full bg-red-500/40"></div>
-	<div class="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></div>
-	<div class="w-2.5 h-2.5 rounded-full bg-green-500/40"></div>
-	</div>
-	<span class="text-[9px] text-white/30 font-['JetBrains_Mono',monospace] tracking-widest">VOICE_AGENT_RUNTIME</span>
-	</div>
-	<div class="flex items-center gap-2">
-	<span class="w-2 h-2 rounded-full bg-healing-teal animate-pulse"></span>
-	<span class="text-[9px] text-healing-teal/60 font-['JetBrains_Mono',monospace]">ACTIVE</span>
+	<div class="relative w-full max-w-md glow-card rounded-2xl">
+	<div class="relative bg-white/85 backdrop-blur-xl rounded-2xl border border-outline/10 shadow-2xl shadow-primary/10 overflow-hidden">
+	<!-- Demo window header -->
+	<div class="flex items-center px-4 pt-4 pb-3 border-b border-outline/10">
+	<div class="flex gap-1.5">
+	<div class="w-2.5 h-2.5 rounded-full bg-red-400/70"></div>
+	<div class="w-2.5 h-2.5 rounded-full bg-yellow-400/70"></div>
+	<div class="w-2.5 h-2.5 rounded-full bg-green-400/70"></div>
 	</div>
 	</div>
-	<!-- Terminal Body -->
+	<!-- Demo body -->
 	<div class="p-4 space-y-2.5" id="hero-agent-log">
 	<!-- items injected by JS -->
 	</div>
-	<!-- Terminal Footer -->
-	<div class="px-4 py-3 border-t border-white/5 flex items-center gap-2">
+	<!-- Demo footer -->
+	<div class="px-4 py-3 border-t border-outline/10 flex items-center gap-2 bg-surface-container-low/60">
 	<span class="text-healing-teal font-['JetBrains_Mono',monospace] text-sm">❯</span>
-	<span class="text-xs text-white/40 font-['JetBrains_Mono',monospace]" id="hero-agent-status">Listening via <kbd class="px-1.5 py-0.5 rounded bg-white/5 text-xs">fn</kbd> ...</span>
+	<span class="text-xs text-on-surface-variant/80 font-['JetBrains_Mono',monospace]" id="hero-agent-status">Listening via <kbd class="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[11px] font-bold">fn</kbd> ...</span>
 	</div>
 	</div>
 	</div>
@@ -350,7 +373,7 @@
 <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Say what you need. Rivertide listens, understands, and acts - logging symptoms, checking schedules, or drafting messages.</p>
 </div>
 
-<div class="grid md:grid-cols-3 gap-6">
+<div class="grid md:grid-cols-3 gap-6" data-stagger>
 <div class="bg-white rounded-2xl p-8 border border-outline/5 shadow-sm text-center">
 <div class="w-16 h-16 rounded-full bg-soft-lavender/60 flex items-center justify-center mx-auto mb-5">
 <span class="material-symbols-outlined text-secondary text-3xl">mic</span>
@@ -381,7 +404,7 @@
 <div class="max-w-7xl mx-auto transition-all duration-1000 opacity-100 translate-y-0">
 <div class="grid md:grid-cols-2 gap-20 items-center">
 <div>
-<h2 class="font-headline-lg text-headline-lg mb-6">Fighting cancer is hard. Managing it shouldnt be.</h2>
+<h2 class="font-headline-lg text-headline-lg mb-6">Fighting cancer is hard. <span class="italic font-bold text-healing-teal text-glow">Managing it shouldn't be.</span></h2>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-8 leading-relaxed"><b>75% of cancer patients experience cognitive impairment</b> during treatment. Why? It's due to the <u>overwhelming friction</u> of learning complex medical jargon, rigid medication schedules, and doctor appointments while you're exhausted.
                 </p>
 <div class="space-y-6">
@@ -429,17 +452,17 @@
 <div class="order-1 md:order-2">
 <kbd class="keycap keycap--lg mb-6">fn</kbd>
 <h3 class="font-headline-lg text-headline-md mb-4">Agentic Dictation</h3>
-<p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Don\'t worry about finding the right words. <b>Just speak.</b> Rivertide smartly transforms messy speech into clean and simple text and pastes it into the text field. Write that email, appeal, or family updates at <u>4x speed</u>.</p>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Don't worry about finding the right words. <b>Just speak.</b> Rivertide smartly transforms messy speech into clean, simple text and pastes it into the text field. Write that email, appeal, or family update at <u>4x speed</u>.</p>
 </div>
 </div>
 <!-- NEW Step 2: Command Mode (Requested Addition) -->
 <div class="grid md:grid-cols-2 gap-16 items-center">
 <div class="order-1">
-<kbd class="keycap keycap--teal keycap--lg mb-6">ctrl + fn</kbd>
+<span class="keycap-combo mb-6"><kbd class="keycap keycap--teal keycap--lg">ctrl</kbd><span class="keycap-plus">+</span><kbd class="keycap keycap--teal keycap--lg">fn</kbd></span>
 <h3 class="font-headline-lg text-headline-md mb-4">Command Mode</h3>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-6"><b>Your personal agent</b> with integrations. Use it to finish <b>complex tasks with a single voice command</b>. Recall that side effect, schedule calls on your calendar, or pull up your last PET scan results instantly and securely!</p>
 </div>
-<div class="order-2 relative">
+<div class="order-2 relative glow-card rounded-3xl">
 <div class="bg-[#18151B] rounded-3xl p-8 console-shadow border border-white/5 relative overflow-hidden min-h-[400px]">
 <!-- UI Elements -->
 <div class="flex items-center justify-between mb-8">
@@ -492,17 +515,17 @@
 <h2 class="font-headline-lg text-headline-lg text-on-primary mb-6">A Personal Assistant That <span style="font-weight: normal;" class=""><i>Remembers For You</i></span>.</h2>
 <p class="font-body-lg text-body-lg text-on-primary/80 max-w-3xl mx-auto mb-16">
             Rivertide builds a secure, encrypted knowledge graph of your journey. Every self-note and detail is mapped, making your experience personalized with full control.</p>
-<!-- Interactive Folder Component -->
-<div class="folder-container mb-24" id="memory-folder" >
+<!-- Interactive Folder Component (opens on hover) -->
+<div class="folder-container mt-36 mb-24" id="memory-folder" >
 <div class="folder-back">
 <div class="absolute top-6 left-6 flex gap-2">
-<div class="w-3 h-3 rounded-full bg-red-500/30"></div>
-<div class="w-3 h-3 rounded-full bg-yellow-500/30"></div>
-<div class="w-3 h-3 rounded-full bg-green-500/30"></div>
+<div class="w-3 h-3 rounded-full bg-red-400/50"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-400/50"></div>
+<div class="w-3 h-3 rounded-full bg-green-400/50"></div>
 </div>
 <div class="absolute bottom-8 left-8 text-left">
-<p class="text-white/40 font-label-caps text-[11px] mb-1 tracking-widest">ENCRYPTED STORAGE</p>
-<p class="text-white font-headline-md text-lg">PATIENT_SECURE_VAULT_V1</p>
+<p class="text-healing-teal/60 font-label-caps text-[11px] mb-1 tracking-widest">ENCRYPTED STORAGE</p>
+<p class="text-primary font-headline-md text-lg">PATIENT_SECURE_VAULT_V1</p>
 </div>
 <div class="absolute inset-0 bg-gradient-to-t from-healing-teal/10 to-transparent pointer-events-none"></div>
 </div>
@@ -572,14 +595,14 @@
 
 <div class="folder-front flex items-center justify-center">
 <div class="text-center">
-<div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4 mx-auto backdrop-blur-sm border border-white/10">
-<span class="material-symbols-outlined text-white/50 text-3xl">lock</span>
+<div class="w-16 h-16 rounded-full bg-white/70 flex items-center justify-center mb-4 mx-auto backdrop-blur-sm border border-secondary/15 shadow-sm">
+<span class="material-symbols-outlined text-healing-teal text-3xl">lock</span>
 </div>
-<p class="text-white/60 font-label-caps text-xs tracking-[0.2em]">Your Files</p>
+<p class="text-on-secondary-fixed-variant font-label-caps text-xs tracking-[0.2em]">Your Files</p>
 </div>
 </div>
 </div>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-8 w-full">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 w-full" data-stagger>
 <div class="bg-primary-container/40 p-6 rounded-2xl border border-on-primary/10 backdrop-blur-md">
 <span class="material-symbols-outlined text-secondary-fixed text-4xl mb-4">hub</span>
 <h4 class="text-on-primary font-headline-md text-body-md mb-2">Connected Data</h4>
@@ -626,13 +649,13 @@
 </div>
 </div>
 </div>
-<div class="col-span-12 md:col-span-4 bg-soft-lavender rounded-3xl p-10 flex flex-col items-center text-center justify-center border border-secondary/10">
+<div class="col-span-12 md:col-span-4 bg-soft-lavender rounded-3xl p-10 flex flex-col items-center text-center justify-center border border-secondary/10 glow-card">
 <div class="w-24 h-24 rounded-full bg-white mb-6 flex items-center justify-center shadow-lg">
 <span class="material-symbols-outlined text-healing-teal text-4xl" style="font-variation-settings: 'FILL' 1;">bedtime</span>
 </div>
 <h4 class="font-headline-md text-headline-md mb-4 text-healing-teal">Advised: Take a 20m Nap</h4>
 <p class="font-body-md text-body-md text-on-secondary-fixed-variant">
-                    Rivertide is built with automatic mental health tracking just for you. Measure cognitive response to your treatment to discuss with your doctor. <b>100% private</b>.</p>
+                    Rivertide is built with automatic mental health tracking just for you. Measure your cognitive response to treatment and discuss it with your doctor. <b>100% private</b>.</p>
 </div>
 </div>
 </div>
@@ -644,13 +667,13 @@
 <h2 class="font-headline-lg text-headline-lg mb-4">Adaptive Agents</h2>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-8">A chat interface with adaptive UI based on your cognitive fatigue levels.</p>
 <!-- Cognitive Load Slider -->
-<div class="max-w-xs mx-auto flex flex-col gap-2 mb-12">
-<div class="flex justify-between font-label-caps text-[10px] text-on-surface-variant">
-<span class="">Focused</span>
-<span class="">Foggy</span>
+<div class="max-w-md mx-auto flex flex-col gap-3 mb-12">
+<div class="flex justify-between font-label-caps text-[11px] tracking-[0.15em] text-on-surface-variant">
+<span>FOCUSED</span>
+<span>FOGGY</span>
 </div>
-<input class="w-full h-2 bg-surface rounded-lg appearance-none cursor-pointer accent-healing-teal" id="cognitive-slider" max="100" min="0" step="1" type="range" value="20">
-<p class="font-label-caps text-[10px] text-healing-teal mt-1">The dashboard adapts to how you think.</p>
+<input class="cognitive-slider" id="cognitive-slider" max="100" min="0" step="1" type="range" value="20">
+<p class="font-body-md text-[14px] text-healing-teal mt-1 text-center transition-colors duration-300" id="cognitive-hint">The dashboard adapts to how you think.</p>
 </div>
 </div>
 <div class="glass-panel rounded-3xl border border-outline/10 shadow-2xl overflow-hidden h-[600px] flex flex-col">
@@ -707,21 +730,25 @@
 <!-- Perspective Marquee Section -->
 <section class="py-20 bg-surface border-t border-outline/5 overflow-hidden">
 <div class="max-w-7xl mx-auto px-container-padding transition-all duration-1000 opacity-100 translate-y-0">
-<p class="text-center font-label-caps text-[11px] text-on-surface-variant mb-12 tracking-[0.2em]">Integrates with</p>
-<div class="perspective-container flex justify-center">
-<div class="perspective-marquee w-full max-w-5xl">
+<h2 class="text-center font-headline-md text-headline-md mb-12 text-on-surface">Integrates with <span class="italic text-healing-teal">your care network</span></h2>
+<div class="flex justify-center">
+<div class="w-full max-w-5xl">
 <div class="marquee-container relative">
-<div class="marquee-content flex gap-20 items-center grayscale opacity-50">
-<span class="font-headline-md text-2xl font-bold tracking-tight">HealthConnect</span>
-<span class="font-headline-md text-2xl font-bold tracking-tight">Epic</span>
-<span class="font-headline-md text-2xl font-bold tracking-tight">MyChart</span>
-<span class="font-headline-md text-2xl font-bold tracking-tight">Oscar</span>
-<span class="font-headline-md text-2xl font-bold tracking-tight">Humana</span>
-<span class="font-headline-md text-2xl font-bold tracking-tight">HealthConnect</span>
-<span class="font-headline-md text-2xl font-bold tracking-tight">Epic</span>
-<span class="font-headline-md text-2xl font-bold tracking-tight">MyChart</span>
-<span class="font-headline-md text-2xl font-bold tracking-tight">Oscar</span>
-<span class="font-headline-md text-2xl font-bold tracking-tight">Humana</span>
+<div class="marquee-content">
+<div class="marquee-group grayscale opacity-60">
+<span class="font-headline-md text-3xl font-bold tracking-tight">HealthConnect</span>
+<span class="font-headline-md text-3xl font-bold tracking-tight">Epic</span>
+<span class="font-headline-md text-3xl font-bold tracking-tight">MyChart</span>
+<span class="font-headline-md text-3xl font-bold tracking-tight">Oscar</span>
+<span class="font-headline-md text-3xl font-bold tracking-tight">Humana</span>
+</div>
+<div class="marquee-group grayscale opacity-60" aria-hidden="true">
+<span class="font-headline-md text-3xl font-bold tracking-tight">HealthConnect</span>
+<span class="font-headline-md text-3xl font-bold tracking-tight">Epic</span>
+<span class="font-headline-md text-3xl font-bold tracking-tight">MyChart</span>
+<span class="font-headline-md text-3xl font-bold tracking-tight">Oscar</span>
+<span class="font-headline-md text-3xl font-bold tracking-tight">Humana</span>
+</div>
 </div>
 <div class="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-surface to-transparent z-10"></div>
 <div class="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-surface to-transparent z-10"></div>
@@ -752,7 +779,7 @@
 <img alt="Rivertide Logo" class="w-10 h-10 object-contain invert brightness-0" src="logo.png">
                 Rivertide
             </a>
-<p class="font-label-md text-label-md text-on-primary/70">© 2026 Rivertide -- Built by CodeTheCure Labs</p>
+<p class="font-label-md text-label-md text-on-primary/70">© 2026 Rivertide · Built by CodeTheCure Labs</p>
 </div>
 <div class="flex flex-wrap justify-center gap-8 md:gap-12">
 <a class="font-body-md text-body-md text-on-primary/70 hover:text-secondary-fixed transition-opacity opacity-80 hover:opacity-100" href="#">Features</a>
@@ -766,9 +793,23 @@
     const slider = document.getElementById('cognitive-slider');
     const complexDetails = document.getElementById('complex-details');
     const agentIntro = document.getElementById('agent-msg-intro');
-    
+    const cognitiveHint = document.getElementById('cognitive-hint');
+
+    const sliderZones = [
+        { max: 40,  color: '#034f46', glow: 'rgba(3,79,70,0.12)',   hint: 'The dashboard adapts to how you think.' },
+        { max: 70,  color: '#6a5778', glow: 'rgba(106,87,120,0.14)', hint: 'Trimming the details for you...' },
+        { max: 101, color: '#7F1C34', glow: 'rgba(127,28,52,0.14)',  hint: 'Foggy mode: one simple task at a time.' },
+    ];
+
     slider.addEventListener('input', (e) => {
-        const val = e.target.value;
+        const val = Number(e.target.value);
+        const zone = sliderZones.find(z => val < z.max);
+        slider.style.setProperty('--thumb-color', zone.color);
+        slider.style.setProperty('--thumb-glow', zone.glow);
+        if (cognitiveHint) {
+            cognitiveHint.innerText = zone.hint;
+            cognitiveHint.style.color = zone.color;
+        }
         if (val > 60) {
             complexDetails.classList.add('hidden');
             agentIntro.innerText = "I've handled the paperwork. You have one simple task:";
@@ -796,20 +837,30 @@
 
 
 
-    // Folder interaction - toggle open/close
+    // Folder interaction - opens on hover (tap toggles on touch devices)
     const memoryFolder = document.getElementById('memory-folder');
     if(memoryFolder) {
         const burstDoc = memoryFolder.querySelector('.burst-document');
-        memoryFolder.addEventListener('click', function() {
-            const wasOpen = this.classList.contains('open');
-            this.classList.toggle('open');
+        const openFolder = () => {
+            if (memoryFolder.classList.contains('open')) return;
+            memoryFolder.classList.add('open');
             // Reset burst-document so the animation replays on each open
-            if (!wasOpen && burstDoc) {
+            if (burstDoc) {
                 burstDoc.style.animation = 'none';
                 void burstDoc.offsetHeight; // force reflow
                 burstDoc.style.animation = '';
             }
-        });
+        };
+        const closeFolder = () => memoryFolder.classList.remove('open');
+        const canHover = window.matchMedia('(hover: hover)').matches;
+        if (canHover) {
+            memoryFolder.addEventListener('mouseenter', openFolder);
+            memoryFolder.addEventListener('mouseleave', closeFolder);
+        } else {
+            memoryFolder.addEventListener('click', () => {
+                memoryFolder.classList.contains('open') ? closeFolder() : openFolder();
+            });
+        }
     }
 
 
@@ -851,11 +902,11 @@
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
             const div = document.createElement('div');
-            div.className = 'voice-line flex items-start gap-3 bg-white/5 border border-white/5 p-4 rounded-xl';
+            div.className = 'voice-line flex items-start gap-3 bg-surface-container-low/90 border border-outline/10 p-4 rounded-xl';
 
             if (line.type === 'spoken') {
                 heroStatus.innerHTML = 'Heard: processing...';
-                div.innerHTML = '<span class="material-symbols-outlined text-white/30 text-lg shrink-0">mic</span>'
+                div.innerHTML = '<span class="material-symbols-outlined text-on-surface-variant/50 text-lg shrink-0">mic</span>'
                     + '<span class="spoken">' + line.text + '</span>';
             } else if (line.type === 'action') {
                 heroStatus.innerHTML = 'Agent acting...';
@@ -864,7 +915,7 @@
                 await new Promise(r => setTimeout(r, 1000));
             } else if (line.type === 'detail') {
                 heroStatus.innerHTML = 'Done. Listening...';
-                div.innerHTML = '<span class="material-symbols-outlined text-healing-teal/50 text-lg shrink-0">check_circle</span>'
+                div.innerHTML = '<span class="material-symbols-outlined text-healing-teal/60 text-lg shrink-0">check_circle</span>'
                     + '<span class="action-detail">' + line.text + '</span>';
                 await new Promise(r => setTimeout(r, 400));
             }
@@ -874,7 +925,7 @@
         }
 
         await new Promise(r => setTimeout(r, 2000));
-        heroStatus.innerHTML = 'Listening via <kbd class="px-1.5 py-0.5 rounded bg-white/5 text-xs">fn</kbd> ...';
+        heroStatus.innerHTML = 'Listening via <kbd class="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[11px] font-bold">fn</kbd> ...';
         setTimeout(showHeroDemo, 500);
     }
 
