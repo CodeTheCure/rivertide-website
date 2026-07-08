@@ -5,6 +5,8 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="assets/ui.css" rel="stylesheet">
+<script defer src="assets/ui.js"></script>
 <!-- Animation Libraries -->
 <script id="tailwind-config">
       tailwind.config = {
@@ -257,22 +259,24 @@
     </style>
 </head>
 <body class="bg-surface selection:bg-soft-lavender">
-<!-- Top Navigation Shell -->
-<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline/5">
-<nav class="flex justify-between items-center px-container-padding h-20 max-w-7xl mx-auto w-full">
-<a href="/" class="font-headline-sm text-headline-sm font-bold text-primary flex items-center gap-2">
-<img alt="Rivertide Logo" class="w-10 h-10 object-contain" src="logo.png">
-            Rivertide
-        </a>
-<div class="hidden md:flex items-center space-x-8">
-<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#walkthrough">Features</a>
-<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="agents.html">Agents</a>
-<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="https://www.codethecure.app/" target="_blank" rel="noopener noreferrer">About us</a>
-</div>
-<a href="signup.html"><button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-body-md font-bold transition-all duration-200 hover:shadow-lg active:scale-95">
-            Sign up for free
-        </button></a>
+<!-- Top Navigation Shell: three separated floating pieces -->
+<header class="floating-header">
+<div class="floating-header__row max-w-7xl mx-auto px-container-padding w-full gap-4">
+<a href="/" class="brand-chip font-bold text-primary">
+<img alt="Rivertide Logo" class="w-9 h-9 object-contain" src="logo.png">
+<span class="text-lg tracking-tight">Rivertide</span>
+</a>
+<nav aria-label="Primary" class="spotlight-nav hidden md:block">
+<div class="spotlight-nav__spot"></div>
+<div class="spotlight-nav__amb"></div>
+<ul>
+<li><a data-active href="#walkthrough">Features</a></li>
+<li><a href="agents.html">Agents</a></li>
+<li><a href="https://www.codethecure.app/" target="_blank" rel="noopener noreferrer">About us</a></li>
+</ul>
 </nav>
+<a href="signup.html" class="tx-btn tx-btn--primary tx-btn--sm"><span class="tx-btn__inner">Sign up for free</span></a>
+</div>
 </header>
 <main class="pt-20">
 <!-- Removed the AI Wellness OS Title Section as requested -->
@@ -280,26 +284,23 @@
 <section class="relative min-h-[80vh] flex items-center pb-24 overflow-hidden hero-gradient">
 <div class="max-w-7xl mx-auto px-container-padding w-full grid lg:grid-cols-2 gap-10 items-start pt-8 lg:pt-8 transition-all duration-1000 opacity-100 translate-y-0">
 <div class="relative z-10">
-<h1 class="font-headline-lg text-[56px] md:text-[84px] leading-[1.05] tracking-tight mb-8 text-primary">
+<h1 class="font-headline-lg text-[40px] sm:text-[56px] md:text-[84px] leading-[1.05] tracking-tight mb-8 text-primary">
                 <span class="md:text-[60px]">Intelligence that</span> <br><span class="italic font-bold text-healing-teal text-glow md:text-[72px]">fights with you.</span>
 </h1>
 <p class="font-body-lg text-[22px] text-on-surface-variant max-w-xl mb-12 leading-relaxed">You fight cancer. We do the rest.</p>
 <div class="flex flex-wrap gap-5 mb-16">
-<a href="signup.html"><button class="bg-primary text-on-primary px-10 py-5 rounded-full font-headline-md text-xl font-bold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-primary/10">Try it for free</button></a>
-<a href="watch.html"><button class="flex items-center gap-3 bg-white/50 backdrop-blur-md border border-outline/20 px-8 py-5 rounded-full font-headline-md text-xl font-bold hover:bg-white/80 transition-all">
-<span class="material-symbols-outlined fill-1">play_circle</span>
-                    Watch how it works
-                </button></a>
+<a href="signup.html" class="tx-btn tx-btn--primary tx-btn--lg"><span class="tx-btn__inner">Try it for free</span></a>
+<a href="watch.html" class="tx-btn tx-btn--secondary tx-btn--lg"><span class="tx-btn__inner"><span class="material-symbols-outlined fill-1">play_circle</span>Watch how it works</span></a>
 </div>
 	
 	<!-- fn keyboard shortcuts -->
 	<div class="flex flex-wrap gap-4 mb-6">
-	<div class="flex items-center gap-3 bg-white/60 border border-outline/10 px-4 py-3 rounded-2xl shadow-sm backdrop-blur-sm">
-	<div class="bg-inverse-surface text-surface w-10 h-10 rounded-lg flex items-center justify-center font-label-caps text-sm border border-white/10 shadow-md">fn</div>
+	<div class="key-chip">
+	<span class="keycap keycap--md" data-autopress>fn</span>
 	<span class="font-body-md text-on-surface-variant text-[15px]">Dictate in &lt;200 ms</span>
 	</div>
-	<div class="flex items-center gap-3 bg-white/60 border border-outline/10 px-4 py-3 rounded-2xl shadow-sm backdrop-blur-sm">
-	<div class="bg-healing-teal text-surface px-3 h-10 rounded-lg flex items-center justify-center font-label-caps text-xs border border-white/10 shadow-md whitespace-nowrap">ctrl + fn</div>
+	<div class="key-chip">
+	<span class="keycap keycap--teal keycap--md whitespace-nowrap" data-autopress>ctrl + fn</span>
 	<span class="font-body-md text-on-surface-variant text-[15px]">Get work done with agents</span>
 	</div>
 	</div>
@@ -426,7 +427,7 @@
 <img alt="Product Interface" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAH0d4zohZwsQ7ON_iCGSNKmQEp4TohEkLRMc8Tf4e3qQcSixKQyx2v-hgUCGK6Pf4Wp30O9FWed5Y1d61oo2mj6VUsmhK5aq4c3D94E82rFs8qO2Nn0zH5RMLI41QbJlh9QTsv4sVNFR_fuveRICN09YlNrNbNRv1wj2A1lBe_INUHOwnOt_JZjvepFF-tJpYfi1qCXdIdMAGqhFixmvn7bjI-thoiNk6gLlKzNQnFI40luSnCUMGtDWNI76ydP6aWPBAdmKkf6ZwI">
 </div>
 <div class="order-1 md:order-2">
-<kbd class="px-4 py-2 bg-inverse-surface text-surface rounded-lg font-label-caps text-[16px] mb-6 inline-block">fn</kbd>
+<kbd class="keycap keycap--lg mb-6">fn</kbd>
 <h3 class="font-headline-lg text-headline-md mb-4">Agentic Dictation</h3>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Don\'t worry about finding the right words. <b>Just speak.</b> Rivertide smartly transforms messy speech into clean and simple text and pastes it into the text field. Write that email, appeal, or family updates at <u>4x speed</u>.</p>
 </div>
@@ -434,7 +435,7 @@
 <!-- NEW Step 2: Command Mode (Requested Addition) -->
 <div class="grid md:grid-cols-2 gap-16 items-center">
 <div class="order-1">
-<kbd class="px-4 py-2 bg-healing-teal text-surface rounded-lg font-label-caps text-[16px] mb-6 inline-block">ctrl + fn</kbd>
+<kbd class="keycap keycap--teal keycap--lg mb-6">ctrl + fn</kbd>
 <h3 class="font-headline-lg text-headline-md mb-4">Command Mode</h3>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-6"><b>Your personal agent</b> with integrations. Use it to finish <b>complex tasks with a single voice command</b>. Recall that side effect, schedule calls on your calendar, or pull up your last PET scan results instantly and securely!</p>
 </div>
@@ -695,9 +696,9 @@
 <div class="p-6 bg-white/50 border-t border-outline/10">
 <div class="relative">
 <input class="w-full bg-surface p-4 pr-16 rounded-2xl border-2 border-outline-variant focus:border-healing-teal focus:ring-0 font-body-md transition-all" placeholder="Type or use 'fn' to speak..." type="text">
-<button class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-healing-teal text-white flex items-center justify-center">
-<span class="material-symbols-outlined">mic</span>
-</button>
+<div class="absolute right-3 top-1/2 -translate-y-1/2">
+<button class="tx-btn tx-btn--accent tx-btn--icon" aria-label="Speak"><span class="tx-btn__inner"><span class="material-symbols-outlined">mic</span></span></button>
+</div>
 </div>
 </div>
 </div>
@@ -737,12 +738,8 @@
             Join 1,200+ patients who save an average of 14 hours a week on medical administration.
         </p>
 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-<a href="signup.html"><button class="bg-primary text-on-primary px-10 py-5 rounded-full font-headline-md text-headline-md font-bold hover:scale-105 transition-transform shadow-xl">
-                Start Your 14-Day Calm
-            </button></a>
-<a href="watch.html"><button class="bg-transparent border-2 border-healing-teal text-healing-teal px-10 py-5 rounded-full font-headline-md text-headline-md font-bold hover:bg-healing-teal/5 transition-colors">
-                View Demo
-            </button></a>
+<a href="signup.html" class="tx-btn tx-btn--primary tx-btn--lg"><span class="tx-btn__inner">Start Your 14-Day Calm</span></a>
+<a href="watch.html" class="tx-btn tx-btn--secondary tx-btn--lg"><span class="tx-btn__inner">View Demo</span></a>
 </div>
 </div>
 </section>
