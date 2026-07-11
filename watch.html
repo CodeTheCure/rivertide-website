@@ -6,6 +6,8 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="assets/ui.css" rel="stylesheet">
+<script defer src="assets/ui.js"></script>
 <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -71,11 +73,11 @@
                     "full": "9999px"
             },
             "fontFamily": {
-                    "body-lg": ["manrope"],
-                    "body-md": ["manrope"],
-                    "headline-md": ["manrope"],
-                    "headline-lg": ["manrope"],
-                    "label-caps": ["jetbrainsMono"]
+                    "body-lg": ["Manrope", "sans-serif"],
+                    "body-md": ["Manrope", "sans-serif"],
+                    "headline-md": ["Manrope", "sans-serif"],
+                    "headline-lg": ["Manrope", "sans-serif"],
+                    "label-caps": ["JetBrains Mono", "monospace"]
             },
             "fontSize": {
                     "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "400"}],
@@ -105,24 +107,24 @@
 </head>
 <body class="bg-surface selection:bg-soft-lavender">
 
-<!-- Top Navigation Shell -->
-<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline/5">
-<nav class="flex justify-between items-center px-container-padding h-20 max-w-7xl mx-auto w-full">
-<a href="/" class="font-headline-sm text-headline-sm font-bold text-primary flex items-center gap-2">
-<img alt="Rivertide Logo" class="w-10 h-10 object-contain" src="logo.png">
-    Rivertide
+<!-- Top Navigation Shell: three separated floating pieces -->
+<header class="floating-header">
+<div class="floating-header__row max-w-7xl mx-auto px-container-padding w-full gap-4">
+<a href="/" class="brand-chip font-bold text-primary">
+<img alt="Rivertide Logo" class="w-9 h-9 object-contain" src="logo.png">
+<span class="text-lg tracking-tight">Rivertide</span>
 </a>
-<div class="hidden md:flex items-center space-x-8">
-<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="/">Features</a>
-<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="agents.html">Agents</a>
-<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="https://www.codethecure.app/" target="_blank" rel="noopener noreferrer">About us</a>
-</div>
-<a href="signup.html">
-<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-body-md font-bold transition-all duration-200 hover:shadow-lg active:scale-95">
-        Sign up for free
-    </button>
-</a>
+<nav aria-label="Primary" class="spotlight-nav hidden md:block">
+<div class="spotlight-nav__spot"></div>
+<div class="spotlight-nav__amb"></div>
+<ul>
+<li><a href="/">Features</a></li>
+<li><a href="agents.html">Agents</a></li>
+<li><a href="https://www.codethecure.app/" target="_blank" rel="noopener noreferrer">About us</a></li>
+</ul>
 </nav>
+<a href="signup.html" class="tx-btn tx-btn--primary tx-btn--sm"><span class="tx-btn__inner">Sign up for free</span></a>
+</div>
 </header>
 
 <main class="pt-20 min-h-[calc(100vh-5rem)] flex items-center">
@@ -153,16 +155,8 @@
 </div>
 
 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-<a href="signup.html">
-<button class="bg-primary text-on-primary px-10 py-5 rounded-full font-headline-md text-headline-md font-bold hover:scale-[1.02] transition-all shadow-xl shadow-primary/10">
-        Join the Waitlist
-    </button>
-</a>
-<a href="/">
-<button class="bg-transparent border-2 border-healing-teal text-healing-teal px-10 py-5 rounded-full font-headline-md text-headline-md font-bold hover:bg-healing-teal/5 transition-colors">
-        Back to Home
-    </button>
-</a>
+<a href="signup.html" class="tx-btn tx-btn--primary tx-btn--lg"><span class="tx-btn__inner">Join the Waitlist</span></a>
+<a href="/" class="tx-btn tx-btn--secondary tx-btn--lg"><span class="tx-btn__inner">Back to Home</span></a>
 </div>
 </div>
 </section>
@@ -175,7 +169,7 @@
 <img alt="Rivertide Logo" class="w-10 h-10 object-contain invert brightness-0" src="logo.png">
     Rivertide
 </a>
-<p class="font-label-md text-label-md text-on-primary/70">© 2026 Rivertide -- Built by CodeTheCure Labs</p>
+<p class="font-label-md text-label-md text-on-primary/70">© 2026 Rivertide · Built by CodeTheCure Labs</p>
 </div>
 <div class="flex flex-wrap justify-center gap-8 md:gap-12">
 <a class="font-body-md text-body-md text-on-primary/70 hover:text-secondary-fixed transition-opacity opacity-80 hover:opacity-100" href="/">Features</a>

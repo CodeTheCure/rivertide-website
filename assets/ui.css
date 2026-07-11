@@ -1,0 +1,425 @@
+/* ============================================================
+   Rivertide UI kit — tactile components
+   Texture buttons · Keycaps · Floating header · Spotlight nav
+   Shared by index.html, agents.html, signup.html, watch.html
+   ============================================================ */
+
+:root {
+  --rt-primary: #003630;
+  --rt-teal: #034f46;
+  --rt-teal-bright: #94d2c6;
+  --rt-ink: #1c1b1b;
+}
+
+/* ------------------------------------------------------------
+   Texture buttons (Cluely-style: gradient bezel ring + lit face)
+   Markup: <a class="tx-btn tx-btn--primary tx-btn--lg">
+             <span class="tx-btn__inner">Label</span>
+           </a>
+   ------------------------------------------------------------ */
+.tx-btn {
+  position: relative;
+  display: inline-flex;
+  border-radius: 9999px;
+  padding: 2px; /* the bezel ring */
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  vertical-align: middle;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.4, 1), box-shadow 0.2s ease, filter 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.tx-btn:focus-visible {
+  outline: 2px solid var(--rt-teal-bright);
+  outline-offset: 3px;
+}
+.tx-btn:hover { transform: translateY(-1px); }
+.tx-btn:active { transform: translateY(1px) scale(0.985); filter: brightness(0.97); }
+
+.tx-btn__inner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  width: 100%;
+  border-radius: 9999px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+/* top sheen sweeping across the face */
+.tx-btn__inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, var(--tx-sheen, 0.26)), rgba(255, 255, 255, 0) 55%);
+}
+
+/* Primary: deep Rivertide green */
+.tx-btn--primary {
+  background: linear-gradient(180deg, #2c7a6b 0%, #0d4a41 35%, #00211d 100%);
+  box-shadow: 0 1px 2px rgba(0, 33, 29, 0.35), 0 6px 16px -6px rgba(0, 54, 48, 0.45);
+}
+.tx-btn--primary .tx-btn__inner {
+  background: linear-gradient(180deg, #0b5a4e 0%, #003630 60%, #00251f 100%);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 -3px 8px rgba(0, 10, 8, 0.45);
+  text-shadow: 0 1px 1px rgba(0, 20, 17, 0.4);
+}
+.tx-btn--primary:hover {
+  box-shadow: 0 2px 3px rgba(0, 33, 29, 0.35), 0 10px 26px -6px rgba(3, 79, 70, 0.5);
+  filter: saturate(1.1) brightness(1.07);
+}
+
+/* Accent: healing teal */
+.tx-btn--accent {
+  background: linear-gradient(180deg, #55a595 0%, #0a5044 40%, #02241f 100%);
+  box-shadow: 0 1px 2px rgba(1, 40, 35, 0.35), 0 6px 16px -6px rgba(3, 79, 70, 0.5);
+}
+.tx-btn--accent .tx-btn__inner {
+  background: linear-gradient(180deg, #12705f 0%, #034f46 60%, #023b34 100%);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 -3px 8px rgba(0, 15, 12, 0.45);
+  text-shadow: 0 1px 1px rgba(0, 25, 21, 0.4);
+}
+.tx-btn--accent:hover {
+  box-shadow: 0 2px 3px rgba(1, 40, 35, 0.35), 0 10px 26px -6px rgba(3, 79, 70, 0.55);
+  filter: saturate(1.08) brightness(1.08);
+}
+
+/* Secondary: warm porcelain */
+.tx-btn--secondary {
+  background: linear-gradient(180deg, #ffffff 0%, #ddd7d2 100%);
+  box-shadow: 0 1px 2px rgba(28, 27, 27, 0.1), 0 6px 16px -8px rgba(28, 27, 27, 0.28);
+}
+.tx-btn--secondary .tx-btn__inner {
+  background: linear-gradient(180deg, #fefdfd 0%, #f1edea 100%);
+  color: var(--rt-ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -2px 6px rgba(28, 27, 27, 0.08);
+  --tx-sheen: 0.55;
+}
+.tx-btn--secondary:hover {
+  box-shadow: 0 2px 3px rgba(28, 27, 27, 0.1), 0 10px 24px -8px rgba(28, 27, 27, 0.32);
+}
+
+/* Sizes */
+.tx-btn--sm .tx-btn__inner { padding: 0.65rem 1.4rem; font-size: 0.95rem; }
+.tx-btn--md .tx-btn__inner { padding: 0.8rem 1.75rem; font-size: 1rem; }
+.tx-btn--lg .tx-btn__inner { padding: 1.1rem 2.3rem; font-size: 1.25rem; }
+.tx-btn--block { display: flex; width: 100%; }
+.tx-btn--icon .tx-btn__inner { width: 2.6rem; height: 2.6rem; padding: 0; }
+
+/* ------------------------------------------------------------
+   Keycaps — physical keys with walls, top sheen and press travel
+   Markup: <span class="keycap keycap--md">fn</span>
+           <span class="keycap keycap--teal keycap--lg">ctrl + fn</span>
+   ------------------------------------------------------------ */
+.keycap {
+  --cap-hi: #46464a;
+  --cap-lo: #232326;
+  --cap-wall: #0f0f11;
+  --cap-edge: rgba(255, 255, 255, 0.3);
+  --cap-text: #f7f6f5;
+  --cap-glow: rgba(255, 255, 255, 0.35);
+  --cap-lift: 3px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--cap-text);
+  border-radius: 9px;
+  background:
+    radial-gradient(130% 100% at 50% 0%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 48%),
+    linear-gradient(180deg, var(--cap-hi), var(--cap-lo));
+  box-shadow:
+    inset 0 1px 0 var(--cap-edge),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.45),
+    inset 1px 0 0 rgba(255, 255, 255, 0.08),
+    inset -1px 0 0 rgba(0, 0, 0, 0.3),
+    0 var(--cap-lift) 0 var(--cap-wall),
+    0 calc(var(--cap-lift) + 1px) 2px rgba(0, 0, 0, 0.35),
+    0 calc(var(--cap-lift) + 7px) 14px -4px rgba(8, 10, 10, 0.4);
+  transition:
+    transform 0.1s cubic-bezier(0.3, 0.7, 0.4, 1),
+    box-shadow 0.1s cubic-bezier(0.3, 0.7, 0.4, 1),
+    text-shadow 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+/* concave top-face sheen */
+.keycap::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 7px;
+  pointer-events: none;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 38%, rgba(0, 0, 0, 0.14) 92%);
+}
+/* pressed: key travels down, backlight blooms */
+.keycap:active,
+.keycap.is-pressed {
+  transform: translateY(var(--cap-lift));
+  box-shadow:
+    inset 0 1px 0 var(--cap-edge),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.45),
+    inset 1px 0 0 rgba(255, 255, 255, 0.08),
+    inset -1px 0 0 rgba(0, 0, 0, 0.3),
+    0 0 0 var(--cap-wall),
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 0 22px var(--cap-glow);
+  text-shadow: 0 0 10px var(--cap-glow), 0 0 2px rgba(255, 255, 255, 0.6);
+}
+
+.keycap--teal {
+  --cap-hi: #106e5e;
+  --cap-lo: #03423a;
+  --cap-wall: #011f1a;
+  --cap-edge: rgba(190, 255, 240, 0.35);
+  --cap-glow: rgba(148, 210, 198, 0.65);
+}
+
+.keycap--md { min-width: 2.5rem; height: 2.5rem; padding: 0 0.7rem; font-size: 0.85rem; }
+.keycap--lg { min-width: 3.25rem; height: 3.1rem; padding: 0 1.1rem; font-size: 1rem; border-radius: 11px; }
+.keycap--lg::after { border-radius: 9px; }
+
+/* Key combos: separate physical keys joined by a plus */
+.keycap-combo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.keycap-plus {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6f7976;
+  user-select: none;
+}
+
+/* Raised porcelain chip that houses a keycap + label (WisprFlow-style) */
+.key-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.7rem 1.15rem 0.85rem 0.8rem;
+  border-radius: 1.15rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f4f2 100%);
+  border: 1px solid rgba(28, 27, 27, 0.07);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 2px 6px rgba(28, 27, 27, 0.05),
+    0 14px 28px -14px rgba(0, 54, 48, 0.22);
+}
+
+/* ------------------------------------------------------------
+   Glow card: slow conic teal/lavender halo behind a card
+   Apply to an element that already has a border-radius + bg.
+   ------------------------------------------------------------ */
+@property --glow-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+.glow-card {
+  position: relative;
+  isolation: isolate;
+}
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--glow-angle),
+    rgba(148, 210, 198, 0.55),
+    rgba(240, 215, 255, 0.5),
+    rgba(3, 79, 70, 0.35),
+    rgba(148, 210, 198, 0.55)
+  );
+  filter: blur(12px);
+  opacity: 0.55;
+  animation: glow-spin 10s linear infinite;
+}
+@keyframes glow-spin {
+  to { --glow-angle: 360deg; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glow-card::before { animation: none; }
+}
+
+/* Staggered scroll reveal (opt-in via data-stagger on a grid/list) */
+[data-stagger] > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--stagger-delay, 0ms);
+}
+[data-stagger].is-revealed > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-stagger] > * { opacity: 1; transform: none; transition: none; }
+}
+
+/* ------------------------------------------------------------
+   Floating header: three separated pieces
+   ------------------------------------------------------------ */
+.floating-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+.floating-header__row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 5rem;
+}
+.floating-header__row > :last-child { justify-self: end; }
+.floating-header .tx-btn,
+.floating-header .brand-chip,
+.floating-header .spotlight-nav { pointer-events: auto; }
+
+.brand-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  justify-self: start;
+  padding: 0.4rem 1.1rem 0.4rem 0.55rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 6px 18px -8px rgba(0, 54, 48, 0.3);
+  transition: box-shadow 0.2s ease;
+}
+.brand-chip:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 8px 22px -8px rgba(0, 54, 48, 0.4); }
+
+/* ------------------------------------------------------------
+   Spotlight nav — dark pill, mouse-tracked underlight,
+   ambient glow resting under the active tab
+   ------------------------------------------------------------ */
+@property --spot-x {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: -200px;
+}
+@property --amb-x {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: -200px;
+}
+
+.spotlight-nav {
+  position: relative;
+  overflow: hidden;
+  border-radius: 9999px;
+  height: 2.9rem;
+  --spot-x: -200px;
+  --amb-x: -200px;
+  background: linear-gradient(180deg, #12261f 0%, #081210 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 -6px 12px -6px rgba(0, 0, 0, 0.6),
+    0 10px 30px -10px rgba(0, 20, 17, 0.55);
+  /* spring the lights back when the mouse leaves / active tab moves */
+  transition:
+    --amb-x 0.5s cubic-bezier(0.3, 1.15, 0.45, 1),
+    --spot-x 0.45s cubic-bezier(0.3, 1.15, 0.45, 1);
+}
+.spotlight-nav.is-tracking {
+  transition: --amb-x 0.5s cubic-bezier(0.3, 1.15, 0.45, 1), --spot-x 0s linear;
+}
+.spotlight-nav ul {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+  padding: 0 0.5rem;
+  list-style: none;
+}
+.spotlight-nav li { height: 100%; display: flex; align-items: center; }
+.spotlight-nav a {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1.15rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 9999px;
+  color: rgba(255, 255, 255, 0.62);
+  transition: color 0.2s ease;
+}
+.spotlight-nav a:hover { color: #fff; }
+.spotlight-nav a[data-active] { color: #fff; }
+.spotlight-nav a:focus-visible {
+  outline: 2px solid rgba(148, 210, 198, 0.7);
+  outline-offset: -6px;
+}
+/* mouse-tracked spotlight rising from the bottom edge */
+.spotlight-nav__spot {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(110px 62px at var(--spot-x) 105%, rgba(148, 210, 198, 0.32), rgba(148, 210, 198, 0) 70%);
+}
+.spotlight-nav:hover .spotlight-nav__spot { opacity: 1; }
+/* ambient light pinned under the active tab */
+.spotlight-nav__amb {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 26px;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(58px 3px at var(--amb-x) calc(100% - 1px), rgba(238, 255, 250, 0.95), rgba(148, 210, 198, 0.4) 60%, rgba(148, 210, 198, 0) 100%),
+    radial-gradient(84px 24px at var(--amb-x) 100%, rgba(148, 210, 198, 0.28), rgba(148, 210, 198, 0) 75%);
+}
+
+/* Mobile: nav pill is hidden; let brand chip and CTA share the row */
+@media (max-width: 767px) {
+  .floating-header .floating-header__row {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1rem !important;  /* beat the px-container-padding utility */
+    padding-right: 1rem !important;
+  }
+}
+@media (max-width: 480px) {
+  .tx-btn--sm .tx-btn__inner { padding: 0.55rem 1rem; font-size: 0.85rem; }
+  .brand-chip { padding-right: 0.8rem; gap: 0.45rem; }
+  .brand-chip span { font-size: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tx-btn,
+  .keycap,
+  .spotlight-nav,
+  .spotlight-nav__spot { transition: none; }
+  .tx-btn:hover { transform: none; }
+}
