@@ -108,11 +108,7 @@
         .glass-panel { background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
         .agent-gradient { background: linear-gradient(135deg, #F0D7FF 0%, #afefe2 100%); }
         .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
-        .hero-gradient { background:
-            radial-gradient(ellipse 60% 55% at 50% 96%, rgba(148, 210, 198, 0.26) 0%, transparent 65%),
-            radial-gradient(ellipse 42% 46% at 6% 12%, rgba(5, 80, 71, 0.07) 0%, transparent 70%),
-            radial-gradient(ellipse 42% 46% at 94% 12%, rgba(5, 80, 71, 0.05) 0%, rgba(240, 215, 255, 0.12) 40%, transparent 70%),
-            #fcf9f8; }
+        .hero-gradient { background: #fcf9f8; }
         .text-glow { text-shadow: 0 0 20px rgba(148, 210, 198, 0.3); }
         
         /* Seamless marquee: two identical groups, track slides one group-width */
@@ -199,7 +195,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding-top: 4.5rem;
+            padding-top: 3.5rem;
             overflow: hidden;
         }
         .folder-container {
@@ -207,11 +203,11 @@
             perspective: 1200px;
             --fp-zoom: 0; --fp-open: 0;
             --fp-p1: 0; --fp-p2: 0; --fp-p3: 0; --fp-burst: 0;
-            --fold-base: 1;
+            --fold-base: 0.88;
             transform: scale(calc((0.82 + var(--fp-zoom) * 0.3) * var(--fold-base)));
         }
-        @media (max-width: 639px) { .folder-container { --fold-base: 0.62; } }
-        @media (min-width: 640px) and (max-width: 899px) { .folder-container { --fold-base: 0.82; } }
+        @media (max-width: 639px) { .folder-container { --fold-base: 0.55; } }
+        @media (min-width: 640px) and (max-width: 899px) { .folder-container { --fold-base: 0.72; } }
         .folder-back { background: linear-gradient(180deg, #eef5f3 0%, #d9eae5 100%); height: 340px; width: 480px; border-radius: 20px; position: relative; z-index: 1; border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 24px 60px rgba(0,15,13,0.45), inset 0 1px 0 rgba(255,255,255,0.9); overflow: hidden; }
         .folder-front {
             background: linear-gradient(180deg, #f5faf8 0%, #cde8e0 100%);
@@ -561,11 +557,10 @@
 <div class="max-w-5xl mx-auto">
 <div class="text-center mb-14">
 <h2 class="font-headline-lg text-headline-lg mb-4">Speak. <span class="italic font-light text-healing-teal">It handles the rest.</span></h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Say what you need. Rivertide listens, understands, and acts - logging symptoms, checking schedules, or drafting messages.</p>
 </div>
 
 <div class="grid md:grid-cols-3 gap-6" data-stagger>
-<div class="bg-white rounded-2xl p-8 border border-outline/5 shadow-sm text-center">
+<div class="text-center">
 <div class="w-16 h-16 rounded-full bg-soft-lavender/60 flex items-center justify-center mx-auto mb-5 text-secondary">
 <span class="mini-wave" aria-hidden="true">
 <span style="--wh:45%; --wd:.38s; --wdel:-.1s"></span>
@@ -580,7 +575,7 @@
 <h3 class="font-headline-md text-headline-md mb-2">1. Speak</h3>
 <p class="font-body-md text-body-md text-on-surface-variant">Just talk naturally - messy speech, pauses, whatever comes out.</p>
 </div>
-<div class="bg-white rounded-2xl p-8 border border-outline/5 shadow-sm text-center">
+<div class="text-center">
 <div class="w-16 h-16 rounded-full bg-healing-teal/10 flex items-center justify-center mx-auto mb-5 text-healing-teal">
 <svg class="icon-graph" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
 <path d="M8.2 9.4 12 6.6m0 0 4 2.4M12 6.6v0M8.5 15.2l2.6 1.9m2 0 2.7-2" opacity=".6"/>
@@ -594,7 +589,7 @@
 <h3 class="font-headline-md text-headline-md mb-2">2. Understand</h3>
 <p class="font-body-md text-body-md text-on-surface-variant">Your agent interprets context - meds, symptoms, appointments, everything.</p>
 </div>
-<div class="bg-white rounded-2xl p-8 border border-outline/5 shadow-sm text-center">
+<div class="text-center">
 <div class="w-16 h-16 rounded-full bg-alert-crimson/10 flex items-center justify-center mx-auto mb-5 text-alert-crimson">
 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <rect x="3.2" y="4" width="6.2" height="6.2" rx="1.8"/>
@@ -650,12 +645,13 @@
 </div>
 </div>
 <div class="relative">
-<div class="aura-panel">
-<div class="aura-panel__glow"></div>
-<div class="aura-panel__glow aura-panel__glow--2"></div>
-<div class="absolute bottom-6 left-6 right-6 bg-white/80 backdrop-blur-xl border border-outline/10 rounded-2xl p-6 shadow-lg text-left">
-<p class="font-body-lg text-[19px] text-primary italic leading-relaxed mb-3">"I left the appointment and couldn't remember half of what she told me."</p>
-<p class="font-label-caps text-label-caps text-healing-teal tracking-widest">WHAT CHEMO BRAIN FEELS LIKE</p>
+<div class="flex items-center justify-center h-full min-h-[400px]">
+<div class="text-center">
+<div class="w-28 h-28 mx-auto mb-6 rounded-2xl bg-white/90 shadow-lg border border-outline/5 flex items-center justify-center">
+<img alt="Rivertide Logo" class="w-20 h-20 object-contain" src="logo.png">
+</div>
+<h3 class="font-headline-md text-headline-md text-primary">Rivertide</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Your Wellness OS</p>
 </div>
 </div>
 </div>
@@ -740,10 +736,10 @@
 <div class="vault-pin-wrap px-container-padding">
 <div class="vault-sticky max-w-7xl mx-auto text-center">
 <h2 class="font-headline-lg text-headline-lg text-on-primary mb-5">A Personal Assistant That <span style="font-weight: normal;" class=""><i>Remembers For You</i></span>.</h2>
-<p class="font-body-lg text-body-lg text-on-primary/80 max-w-3xl mx-auto mb-14">
+<p class="font-body-lg text-body-lg text-on-primary/80 max-w-3xl mx-auto mb-24">
             Rivertide builds a secure, encrypted knowledge graph of your journey. Every self-note and detail is mapped, making your experience personalized with full control.</p>
 <!-- Scroll-driven folder: opens as the section stays pinned -->
-<div class="folder-container mt-36" id="memory-folder">
+<div class="folder-container mt-16" id="memory-folder">
 <div class="folder-back">
 <div class="absolute top-6 left-6 flex gap-2">
 <div class="w-3 h-3 rounded-full bg-red-400/50"></div>
@@ -898,9 +894,9 @@
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-8">A chat interface with adaptive UI based on your cognitive fatigue levels.</p>
 <!-- Cognitive Load Slider -->
 <div class="max-w-md mx-auto flex flex-col gap-3 mb-12">
-<div class="flex justify-between font-label-caps text-[11px] tracking-[0.15em] text-on-surface-variant">
-<span>FOCUSED</span>
-<span>FOGGY</span>
+<div class="flex justify-between font-body-md text-[13px] italic text-on-surface-variant/50">
+<span>focused</span>
+<span>foggy</span>
 </div>
 <input class="cognitive-slider" id="cognitive-slider" max="100" min="0" step="1" type="range" value="20">
 <p class="font-body-md text-[14px] text-healing-teal mt-1 text-center transition-colors duration-300" id="cognitive-hint">The dashboard adapts to how you think.</p>
