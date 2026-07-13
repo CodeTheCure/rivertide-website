@@ -1,29 +1,24 @@
 {
   "name": "rivertide-website",
-  "version": "1.0.0",
-  "description": "This is a modern, responsive website for Rivertide, a wellness OS for oncology patients that helps manage cognitive impairment during cancer treatment.",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "Rivertide - The Wellness OS for Oncology (Next.js)",
+  "private": true,
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "node --watch server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CodeTheCure/rivertide-website.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/CodeTheCure/rivertide-website/issues"
-  },
-  "homepage": "https://github.com/CodeTheCure/rivertide-website#readme",
   "dependencies": {
-    "@hono/node-server": "^2.0.6",
-    "@supabase/server": "^1.2.0",
-    "dotenv": "^17.4.2",
-    "hono": "^4.12.27"
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/container-queries": "^0.1.1"
   }
 }
