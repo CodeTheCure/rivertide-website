@@ -513,6 +513,7 @@
 <p class="font-body-lg text-[22px] text-on-surface-variant max-w-xl mb-10 leading-relaxed">You fight cancer. We do the rest.</p>
 <div class="flex flex-wrap justify-center gap-5 mb-12">
 <a href="signup.html" class="tx-btn tx-btn--primary tx-btn--lg"><span class="tx-btn__inner">Try it for free</span></a>
+<a id="download-btn" href="https://github.com/CodeTheCure/rivertide-electron/releases/latest" target="_blank" class="tx-btn tx-btn--accent tx-btn--lg"><span class="tx-btn__inner"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v13m-5-5l5 5 5-5"/><path d="M5 19h14" opacity=".6"/></svg><span id="download-label">Download</span></span></a>
 <a href="watch.html" class="tx-btn tx-btn--secondary tx-btn--lg"><span class="tx-btn__inner"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M10 8.8v6.4l5.4-3.2z" fill="currentColor" stroke="none"/></svg>Watch how it works</span></a>
 </div>
 	
@@ -997,6 +998,7 @@
         </p>
 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
 <a href="signup.html" class="tx-btn tx-btn--primary tx-btn--lg"><span class="tx-btn__inner">Start Your 14-Day Calm</span></a>
+<a id="download-btn-footer" href="https://github.com/CodeTheCure/rivertide-electron/releases/latest" target="_blank" class="tx-btn tx-btn--accent tx-btn--lg"><span class="tx-btn__inner"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v13m-5-5l5 5 5-5"/><path d="M5 19h14" opacity=".6"/></svg><span id="download-label-footer">Download</span></span></a>
 <a href="watch.html" class="tx-btn tx-btn--secondary tx-btn--lg"><span class="tx-btn__inner">View Demo</span></a>
 </div>
 </div>
@@ -1148,4 +1150,25 @@
 
 
 
+<script>
+(function() {
+    var isMac = /Mac|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    var label;
+    var btn;
+
+    btn = document.getElementById('download-btn');
+    label = document.getElementById('download-label');
+    if (btn && label) {
+        label.textContent = isMac ? 'Download for macOS' : 'Download for Windows';
+        btn.href = 'https://github.com/CodeTheCure/rivertide-electron/releases/latest';
+    }
+
+    btn = document.getElementById('download-btn-footer');
+    label = document.getElementById('download-label-footer');
+    if (btn && label) {
+        label.textContent = isMac ? 'Download for macOS' : 'Download for Windows';
+        btn.href = 'https://github.com/CodeTheCure/rivertide-electron/releases/latest';
+    }
+})();
+</script>
 </body></html>
