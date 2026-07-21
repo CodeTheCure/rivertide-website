@@ -1165,35 +1165,95 @@
         linux:    'https://github.com/CodeTheCure/rivertide-electron/releases/download/v1.3.0/Rivertide-1.3.0.AppImage'
     };
 
-    // Detect platform
-    var ua = navigator.userAgent;
-    var os;
-    if (/Windows|Win32|Win64/i.test(ua)) os = 'windows';
-    else if (/Mac|iPhone|iPad|iPod/i.test(ua)) os = /arm|aarch64/i.test(ua) ? 'macArm' : 'macIntel';
-    else if (/Linux/i.test(ua)) os = 'linux';
-    else os = 'windows';
+    // ----- Platform detection (tiered) -----
 
-    var info = {
+    // Tier 1: high-entropy client hints (Chrome, Edge, Opera — gives real arch)
+    function detectFromUAData() {
+        var uad = navigator.userAgentData;
+        if (!uad || !uad.getHighEntropyValues) return null;
+        return uad.getHighEntropyValues(['architecture', 'platform'])
+            .then(function(data) {
+                var arch = (data.architecture || '').toLowerCase();
+                var plat = (data.platform || '').toLowerCase();
+                if (plat.indexOf('win') !== -1) return 'windows';
+                if (plat.indexOf('linux') !== -1) return 'linux';
+                if (plat.indexOf('mac') !== -1) {
+                    return arch.indexOf('arm') !== -1 ? 'macArm' : 'macIntel';
+                }
+                return null;
+            })
+            .catch(function() { return null; });
+    }
+
+    // Tier 2: user-agent + platform sniffing
+    function detectFromUA() {
+        var ua = navigator.userAgent;
+        // Windows
+        if (/Windows|Win32|Win64/i.test(ua)) return 'windows';
+        // Mac — try to sniff Apple Silicon
+        if (/Mac|iPhone|iPad|iPod/i.test(ua)) {
+            // Safari: "ARM Mac OS X"   Firefox: "aarch64"   Chrome UA: lies (always Intel)
+            if (/arm|aarch64/i.test(ua)) return 'macArm';
+            if (/Macintosh/i.test(ua) && /Intel/i.test(ua)) {
+                // Chrome & most browsers say "Intel Mac OS X" even on Apple Silicon
+                // Try navigator.platform as a hint
+                if (/arm|aarch64/i.test(navigator.platform || '')) return 'macArm';
+                if (typeof navigator.userAgentData === 'object') {
+                    // UA Data exists but getHighEntropyValues failed — defer resolution
+                    return 'macUnknown';
+                }
+                return 'macIntel';
+            }
+            return 'macIntel';
+        }
+        // Linux
+        if (/Linux/i.test(ua)) return 'linux';
+        return null;
+    }
+
+    // Merge: use tier-2 sync value, then upgrade with tier-1 if available
+    var os = detectFromUA();
+
+    // Special: if Chrome/Edge and we got macUnknown, mark as macIntel and let
+    // the async UAData upgrade it to macArm if it finds ARM architecture.
+    // For Safari/Firefox, we already got the right answer from UA string.
+    if (os === 'macUnknown') os = 'macIntel'; // best guess, will be refined
+
+    var infoMap = {
         macIntel: { label: 'Download for Mac (Intel)', url: DL.macIntel, svg: null },
         macArm:   { label: 'Download for Mac (Apple Silicon)', url: DL.macArm, svg: null },
         windows:  { label: 'Download for Windows', url: DL.windows, svg: winSvg },
         linux:    { label: 'Download for Linux', url: DL.linux, svg: linuxSvg }
-    }[os];
+    };
 
-    function setupBtn(btnId, labelId, iconId) {
-        btn = document.getElementById(btnId);
-        label = document.getElementById(labelId);
-        icon = document.getElementById(iconId);
-        if (!btn || !label) return;
-        label.textContent = info.label;
-        if (icon && info.svg) icon.innerHTML = info.svg;
-        btn.href = info.url;
-        btn.removeAttribute('target');
+    function applyInfo(info) {
+        ['download-btn', 'download-btn-footer'].forEach(function(btnId) {
+            btn = document.getElementById(btnId);
+            label = document.getElementById(btnId === 'download-btn' ? 'download-label' : 'download-label-footer');
+            icon = document.getElementById(btnId === 'download-btn' ? 'os-icon' : 'os-icon-footer');
+            if (!btn || !label) return;
+            label.textContent = info.label;
+            if (icon && info.svg) icon.innerHTML = info.svg;
+            btn.href = info.url;
+            btn.removeAttribute('target');
+        });
     }
 
-    setupBtn('download-btn', 'download-label', 'os-icon');
-    setupBtn('download-btn-footer', 'download-label-footer', 'os-icon-footer');
+    // Apply synchronously with best guess
+    applyInfo(infoMap[os] || infoMap.windows);
+
+    // Try high-entropy UAData to refine (fixes Chrome on Apple Silicon)
+    var uaDataPromise = detectFromUAData();
+    if (uaDataPromise) {
+        uaDataPromise.then(function(refined) {
+            if (refined && refined !== os) {
+                os = refined;
+                applyInfo(infoMap[os] || infoMap.windows);
+            }
+        });
+    }
 })();
+
 
 </script>
 </body></html>
