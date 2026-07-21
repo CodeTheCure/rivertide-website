@@ -1151,28 +1151,49 @@
 
 <script>
 (function() {
-    var isMac = /Mac|iPhone|iPad|iPod/i.test(navigator.userAgent);
     var label, icon, btn;
 
-    // Windows logo SVG (replaces Apple logo on Windows)
+    // OS logos
     var winSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h8.4v8.4H3V3zm9.6 0H21v8.4h-8.4V3zM3 12.6h8.4V21H3v-8.4zm9.6 0H21V21h-8.4v-8.4z"/></svg>';
+    var linuxSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.4 4.3 8 7 8 10c0 2.5 1 5 3 6.5V22h2v-5.5c2-1.5 3-4 3-6.5 0-3-1.4-5.7-4-8z"/><path d="M10 16c-1-.5-2-1.5-2-3"/><path d="M14 16c1-.5 2-1.5 2-3"/></svg>';
+
+    // Direct download URLs for latest release
+    var DL = {
+        macIntel: 'https://github.com/CodeTheCure/rivertide-electron/releases/download/v1.3.0/Rivertide-1.3.0.dmg',
+        macArm:   'https://github.com/CodeTheCure/rivertide-electron/releases/download/v1.3.0/Rivertide-1.3.0-arm64.dmg',
+        windows:  'https://github.com/CodeTheCure/rivertide-electron/releases/download/v1.3.0/Rivertide.Setup.1.3.0.exe',
+        linux:    'https://github.com/CodeTheCure/rivertide-electron/releases/download/v1.3.0/Rivertide-1.3.0.AppImage'
+    };
+
+    // Detect platform
+    var ua = navigator.userAgent;
+    var os;
+    if (/Windows|Win32|Win64/i.test(ua)) os = 'windows';
+    else if (/Mac|iPhone|iPad|iPod/i.test(ua)) os = /arm|aarch64/i.test(ua) ? 'macArm' : 'macIntel';
+    else if (/Linux/i.test(ua)) os = 'linux';
+    else os = 'windows';
+
+    var info = {
+        macIntel: { label: 'Download for Mac (Intel)', url: DL.macIntel, svg: null },
+        macArm:   { label: 'Download for Mac (Apple Silicon)', url: DL.macArm, svg: null },
+        windows:  { label: 'Download for Windows', url: DL.windows, svg: winSvg },
+        linux:    { label: 'Download for Linux', url: DL.linux, svg: linuxSvg }
+    }[os];
 
     function setupBtn(btnId, labelId, iconId) {
         btn = document.getElementById(btnId);
         label = document.getElementById(labelId);
         icon = document.getElementById(iconId);
         if (!btn || !label) return;
-        if (isMac) {
-            label.textContent = 'Download for macOS';
-        } else {
-            label.textContent = 'Download for Windows';
-            if (icon) icon.innerHTML = winSvg;
-        }
-        btn.href = 'https://github.com/CodeTheCure/rivertide-electron/releases/latest';
+        label.textContent = info.label;
+        if (icon && info.svg) icon.innerHTML = info.svg;
+        btn.href = info.url;
+        btn.removeAttribute('target');
     }
 
     setupBtn('download-btn', 'download-label', 'os-icon');
     setupBtn('download-btn-footer', 'download-label-footer', 'os-icon-footer');
 })();
+
 </script>
 </body></html>
