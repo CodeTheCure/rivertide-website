@@ -112,7 +112,6 @@
         .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
         .hero-gradient { background: #fcf9f8; }
         .text-glow { text-shadow: 0 0 20px rgba(148, 210, 198, 0.3); }
-        
         /* Seamless marquee: two identical groups, track slides one group-width */
         @keyframes marquee {
             to { transform: translateX(-50%); }
@@ -124,7 +123,6 @@
         @media (prefers-reduced-motion: reduce) {
             .marquee-content { animation: none; }
         }
-
         /* Mini animated waveform (Speak card) */
         .mini-wave { display: inline-flex; align-items: center; gap: 3px; height: 30px; }
         .mini-wave span {
@@ -153,7 +151,6 @@
             .mini-wave span, .icon-graph circle { animation: none; }
             .icon-draw-check { animation: none; stroke-dashoffset: 0; }
         }
-
         /* Warm aura panel (problem section) - soft rays in Rivertide tones */
         .aura-panel {
             position: relative;
@@ -186,7 +183,6 @@
         @media (prefers-reduced-motion: reduce) {
             .aura-panel__glow { animation: none; }
         }
-
         /* Scroll-driven vault folder: pinned while the folder scrubs open */
         .vault-pin-wrap { height: 260vh; }
         .vault-sticky {
@@ -262,12 +258,10 @@
             .vault-pin-wrap { height: auto; }
             .vault-sticky { position: static; height: auto; padding: 3rem 0 4rem; overflow: visible; }
         }
-
         /* Speech Logic */
         .speech-item { transition: all 0.3s ease; }
         .speech-item.cleaned { color: #034f46; font-weight: 600; opacity: 1; }
         .speech-item.chaotic { opacity: 0.4; font-style: italic; }
-
         /* Document Drop Animation */
         @keyframes documentQuickDrop {
             0% { transform: translateY(0) scale(0.95); opacity: 0; }
@@ -275,7 +269,6 @@
             100% { transform: translateY(-110px) rotate(-4deg) scale(1.02); opacity: 1; }
         }
         .document-drop { animation: documentQuickDrop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-
         /* Cognitive load slider */
         .cognitive-slider {
             -webkit-appearance: none;
@@ -312,7 +305,6 @@
             cursor: grab;
             transition: transform 0.15s ease, border-color 0.35s ease, box-shadow 0.35s ease;
         }
-
         .floating-badge {
             animation: float 6s ease-in-out infinite;
         }
@@ -320,10 +312,8 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
-
         /* Command Mode Console Styles */
         .console-shadow { box-shadow: 0 50px 100px -20px rgba(0,0,0,0.25), 0 30px 60px -30px rgba(0,0,0,0.3); }
-    
         /* Hero voice flow: raw speech in -> waveform pill -> care handled out */
         .voice-flow {
             position: relative;
@@ -514,10 +504,9 @@
 </h1>
 <p class="font-body-lg text-[22px] text-on-surface-variant max-w-xl mb-10 leading-relaxed">You fight cancer. We do the rest.</p>
 <div class="flex flex-wrap justify-center gap-5 mb-12">
-<a id="download-btn" href="https://github.com/CodeTheCure/rivertide-electron/releases/latest" target="_blank" class="tx-btn tx-btn--primary tx-btn--lg"><span class="tx-btn__inner"><span id="os-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg></span><span id="download-label">Download for macOS</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v13m-5-5l5 5 5-5"/><path d="M5 19h14" opacity=".6"/></svg></span></a>
+<button id="download-btn" class="tx-btn tx-btn--primary tx-btn--lg" disabled><span class="tx-btn__inner"><span id="os-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg></span><span id="download-label">Download for macOS</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v13m-5-5l5 5 5-5"/><path d="M5 19h14" opacity=".6"/></svg></span></button>
 <a href="watch.html" class="tx-btn tx-btn--secondary tx-btn--lg"><span class="tx-btn__inner"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M10 8.8v6.4l5.4-3.2z" fill="currentColor" stroke="none"/></svg>Watch how it works</span></a>
 </div>
-	
 	<!-- fn keyboard shortcuts -->
 	<div class="flex flex-wrap justify-center gap-4" data-stagger>
 	<div class="key-chip">
@@ -560,7 +549,6 @@
 <div class="text-center mb-14">
 <h2 class="font-headline-lg text-headline-lg mb-4">Speak. <span class="italic font-light text-healing-teal">It handles the rest.</span></h2>
 </div>
-
 <div class="grid md:grid-cols-3 gap-6" data-stagger>
 <div class="text-center">
 <div class="w-16 h-16 rounded-full bg-soft-lavender/60 flex items-center justify-center mx-auto mb-5 text-secondary">
@@ -606,7 +594,6 @@
 </div>
 </div>
 </section>
-
 <!-- Problem Section: Chemo Brain -->
 <section class="py-section-gap px-container-padding bg-surface-container-low">
 <div class="max-w-7xl mx-auto transition-all duration-1000 opacity-100 translate-y-0">
@@ -695,7 +682,6 @@
 <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
 <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
 </div>
-
 </div>
 <div class="space-y-6">
 <!-- Card 1 -->
@@ -817,7 +803,6 @@
 <span class="text-[9px] text-healing-teal font-bold tracking-[0.15em]">AUTO-SAVED TO VAULT</span>
 </div>
 </div>
-
 <div class="folder-front flex items-center justify-center">
 <div class="text-center">
 <div class="w-16 h-16 rounded-full bg-white/70 flex items-center justify-center mb-4 mx-auto backdrop-blur-sm border border-healing-teal/15 shadow-sm text-healing-teal">
@@ -916,7 +901,6 @@
 <p class="text-[10px] text-on-surface-variant font-label-caps tracking-widest opacity-60">just a demo...</p>
 </div>
 </div>
-
 </div>
 <!-- Chat Messages -->
 <div class="flex-1 p-8 space-y-6 overflow-y-auto bg-surface/30" id="chat-messages">
@@ -999,7 +983,7 @@
         </p>
 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
 <a href="signup.html" class="tx-btn tx-btn--primary tx-btn--lg"><span class="tx-btn__inner">Start Your 14-Day Calm</span></a>
-<a id="download-btn-footer" href="https://github.com/CodeTheCure/rivertide-electron/releases/latest" target="_blank" class="tx-btn tx-btn--accent tx-btn--lg"><span class="tx-btn__inner"><span id="os-icon-footer"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg></span><span id="download-label-footer">Download for macOS</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v13m-5-5l5 5 5-5"/><path d="M5 19h14" opacity=".6"/></svg></span></a>
+<button id="download-btn-footer" class="tx-btn tx-btn--accent tx-btn--lg" disabled><span class="tx-btn__inner"><span id="os-icon-footer"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg></span><span id="download-label-footer">Download for macOS</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v13m-5-5l5 5 5-5"/><path d="M5 19h14" opacity=".6"/></svg></span></button>
 <a href="watch.html" class="tx-btn tx-btn--secondary tx-btn--lg"><span class="tx-btn__inner">View Demo</span></a>
 </div>
 </div>
@@ -1028,13 +1012,11 @@
     const complexDetails = document.getElementById('complex-details');
     const agentIntro = document.getElementById('agent-msg-intro');
     const cognitiveHint = document.getElementById('cognitive-hint');
-
     const sliderZones = [
         { max: 40,  color: '#034f46', glow: 'rgba(3,79,70,0.12)',   hint: 'The dashboard adapts to how you think.' },
         { max: 70,  color: '#6a5778', glow: 'rgba(106,87,120,0.14)', hint: 'Trimming the details for you...' },
         { max: 101, color: '#7F1C34', glow: 'rgba(127,28,52,0.14)',  hint: 'Foggy mode: one simple task at a time.' },
     ];
-
     slider.addEventListener('input', (e) => {
         const val = Number(e.target.value);
         const zone = sliderZones.find(z => val < z.max);
@@ -1052,7 +1034,6 @@
             agentIntro.innerText = "I've scanned the 14 pages. There is only one high-priority task for you:";
         }
     });
-
     // Intersection Observer for sections
     const observerOptions = { threshold: 0.1 };
     const observer = new IntersectionObserver((entries) => {
@@ -1063,14 +1044,10 @@
             }
         });
     }, observerOptions);
-
     document.querySelectorAll('section > div').forEach(el => {
         el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
         observer.observe(el);
     });
-
-
-
     // Scroll-driven vault folder: while the section is pinned, scroll progress
     // scrubs the folder open (zoom in -> lid opens -> pages rise -> note bursts)
     const memoryFolder = document.getElementById('memory-folder');
@@ -1106,9 +1083,9 @@
             onScroll();
         }
     }
-
-
-	    // Hero voice flow: waveform bars + seamless text-on-curve marquee
+</script>
+<script>
+    // Hero voice flow: waveform bars + seamless text-on-curve marquee
     const flowSvg = document.getElementById('voice-flow-svg');
     if (flowSvg) {
         // Build the waveform pill bars (two copies for a seamless slide)
@@ -1124,7 +1101,6 @@
                 wave.appendChild(bar);
             }
         }
-
         // Each textPath holds its content twice; measuring one copy lets the
         // marquee loop restart on an identical glyph pattern (no visible jump).
         const FLOW_SPEED = 46; // svg units per second, both streams
@@ -1140,122 +1116,8 @@
                 }
             });
         });
-
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             flowSvg.pauseAnimations();
         }
     }</script>
-
-
-
-
-
-
-<script>
-(function() {
-    var label, icon, btn;
-
-    // OS logos
-    var winSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h8.4v8.4H3V3zm9.6 0H21v8.4h-8.4V3zM3 12.6h8.4V21H3v-8.4zm9.6 0H21V21h-8.4v-8.4z"/></svg>';
-    var linuxSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.4 4.3 8 7 8 10c0 2.5 1 5 3 6.5V22h2v-5.5c2-1.5 3-4 3-6.5 0-3-1.4-5.7-4-8z"/><path d="M10 16c-1-.5-2-1.5-2-3"/><path d="M14 16c1-.5 2-1.5 2-3"/></svg>';
-
-    // Direct download URLs for latest release
-    var DL = {
-        macIntel: 'https://github.com/CodeTheCure/rivertide-electron/releases/download/v1.3.0/Rivertide-1.3.0.dmg',
-        macArm:   'https://github.com/CodeTheCure/rivertide-electron/releases/download/v1.3.0/Rivertide-1.3.0-arm64.dmg',
-        windows:  'https://github.com/CodeTheCure/rivertide-electron/releases/download/v1.3.0/Rivertide.Setup.1.3.0.exe',
-        linux:    'https://github.com/CodeTheCure/rivertide-electron/releases/download/v1.3.0/Rivertide-1.3.0.AppImage'
-    };
-
-    // ----- Platform detection (tiered) -----
-
-    // Tier 1: high-entropy client hints (Chrome, Edge, Opera — gives real arch)
-    function detectFromUAData() {
-        var uad = navigator.userAgentData;
-        if (!uad || !uad.getHighEntropyValues) return null;
-        return uad.getHighEntropyValues(['architecture', 'platform'])
-            .then(function(data) {
-                var arch = (data.architecture || '').toLowerCase();
-                var plat = (data.platform || '').toLowerCase();
-                if (plat.indexOf('win') !== -1) return 'windows';
-                if (plat.indexOf('linux') !== -1) return 'linux';
-                if (plat.indexOf('mac') !== -1) {
-                    return arch.indexOf('arm') !== -1 ? 'macArm' : 'macIntel';
-                }
-                return null;
-            })
-            .catch(function() { return null; });
-    }
-
-    // Tier 2: user-agent + platform sniffing
-    function detectFromUA() {
-        var ua = navigator.userAgent;
-        // Windows
-        if (/Windows|Win32|Win64/i.test(ua)) return 'windows';
-        // Mac — try to sniff Apple Silicon
-        if (/Mac|iPhone|iPad|iPod/i.test(ua)) {
-            // Safari: "ARM Mac OS X"   Firefox: "aarch64"   Chrome UA: lies (always Intel)
-            if (/arm|aarch64/i.test(ua)) return 'macArm';
-            if (/Macintosh/i.test(ua) && /Intel/i.test(ua)) {
-                // Chrome & most browsers say "Intel Mac OS X" even on Apple Silicon
-                // Try navigator.platform as a hint
-                if (/arm|aarch64/i.test(navigator.platform || '')) return 'macArm';
-                if (typeof navigator.userAgentData === 'object') {
-                    // UA Data exists but getHighEntropyValues failed — defer resolution
-                    return 'macUnknown';
-                }
-                return 'macIntel';
-            }
-            return 'macIntel';
-        }
-        // Linux
-        if (/Linux/i.test(ua)) return 'linux';
-        return null;
-    }
-
-    // Merge: use tier-2 sync value, then upgrade with tier-1 if available
-    var os = detectFromUA();
-
-    // Special: if Chrome/Edge and we got macUnknown, mark as macIntel and let
-    // the async UAData upgrade it to macArm if it finds ARM architecture.
-    // For Safari/Firefox, we already got the right answer from UA string.
-    if (os === 'macUnknown') os = 'macIntel'; // best guess, will be refined
-
-    var infoMap = {
-        macIntel: { label: 'Download for Mac (Intel)', url: DL.macIntel, svg: null },
-        macArm:   { label: 'Download for Mac (Apple Silicon)', url: DL.macArm, svg: null },
-        windows:  { label: 'Download for Windows', url: DL.windows, svg: winSvg },
-        linux:    { label: 'Download for Linux', url: DL.linux, svg: linuxSvg }
-    };
-
-    function applyInfo(info) {
-        ['download-btn', 'download-btn-footer'].forEach(function(btnId) {
-            btn = document.getElementById(btnId);
-            label = document.getElementById(btnId === 'download-btn' ? 'download-label' : 'download-label-footer');
-            icon = document.getElementById(btnId === 'download-btn' ? 'os-icon' : 'os-icon-footer');
-            if (!btn || !label) return;
-            label.textContent = info.label;
-            if (icon && info.svg) icon.innerHTML = info.svg;
-            btn.href = info.url;
-            btn.removeAttribute('target');
-        });
-    }
-
-    // Apply synchronously with best guess
-    applyInfo(infoMap[os] || infoMap.windows);
-
-    // Try high-entropy UAData to refine (fixes Chrome on Apple Silicon)
-    var uaDataPromise = detectFromUAData();
-    if (uaDataPromise) {
-        uaDataPromise.then(function(refined) {
-            if (refined && refined !== os) {
-                os = refined;
-                applyInfo(infoMap[os] || infoMap.windows);
-            }
-        });
-    }
-})();
-
-
-</script>
 </body></html>

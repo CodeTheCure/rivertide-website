@@ -24,102 +24,121 @@ export default function HomePage() {
 
   // ---- Intersection Observer for sections ----
   useEffect(() => {
-    const observerOptions = { threshold: 0.1 };
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("opacity-100", "translate-y-0");
-          entry.target.classList.remove("opacity-0", "translate-y-10");
-        }
+    // Use setTimeout to ensure DOM is ready after Next.js hydration
+    const timer = setTimeout(() => {
+      const observerOptions = { threshold: 0.1 };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("opacity-100", "translate-y-0");
+            entry.target.classList.remove("opacity-0", "translate-y-10");
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll("section > div").forEach((el) => {
+        el.classList.add("transition-all", "duration-1000", "opacity-0", "translate-y-10");
+        observer.observe(el);
       });
-    }, observerOptions);
 
-    document.querySelectorAll("section > div").forEach((el) => {
-      el.classList.add("transition-all", "duration-1000", "opacity-0", "translate-y-10");
-      observer.observe(el);
-    });
+      sectionObserverRef.current = observer;
+    }, 100);
 
-    sectionObserverRef.current = observer;
-    return () => observer.disconnect();
+    return () => {
+      if (sectionObserverRef.current) {
+        sectionObserverRef.current.disconnect();
+      }
+      clearTimeout(timer);
+    };
   }, []);
 
   // ---- Scroll-driven vault folder ----
   useEffect(() => {
-    const folder = memoryFolderRef.current;
-    const wrap = vaultWrapRef.current;
-    if (!folder || !wrap) return;
+    // Use setTimeout to ensure DOM is ready after Next.js hydration
+    const timer = setTimeout(() => {
+      const folder = memoryFolderRef.current;
+      const wrap = vaultWrapRef.current;
+      if (!folder || !wrap) return;
 
-    const seg = (p, a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
-    const easeOut = (t) => 1 - Math.pow(1 - t, 3);
-    const setVars = (p) => {
-      folder.style.setProperty("--fp-zoom", easeOut(seg(p, 0, 0.35)).toFixed(4));
-      folder.style.setProperty("--fp-open", easeOut(seg(p, 0.12, 0.55)).toFixed(4));
-      folder.style.setProperty("--fp-p3", easeOut(seg(p, 0.3, 0.66)).toFixed(4));
-      folder.style.setProperty("--fp-p2", easeOut(seg(p, 0.38, 0.74)).toFixed(4));
-      folder.style.setProperty("--fp-p1", easeOut(seg(p, 0.46, 0.82)).toFixed(4));
-      folder.style.setProperty("--fp-burst", easeOut(seg(p, 0.6, 0.94)).toFixed(4));
-    };
+      const seg = (p, a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
+      const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+      const setVars = (p) => {
+        folder.style.setProperty("--fp-zoom", easeOut(seg(p, 0, 0.35)).toFixed(4));
+        folder.style.setProperty("--fp-open", easeOut(seg(p, 0.12, 0.55)).toFixed(4));
+        folder.style.setProperty("--fp-p3", easeOut(seg(p, 0.3, 0.66)).toFixed(4));
+        folder.style.setProperty("--fp-p2", easeOut(seg(p, 0.38, 0.74)).toFixed(4));
+        folder.style.setProperty("--fp-p1", easeOut(seg(p, 0.46, 0.82)).toFixed(4));
+        folder.style.setProperty("--fp-burst", easeOut(seg(p, 0.6, 0.94)).toFixed(4));
+      };
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setVars(1);
-    } else {
-      let ticking = false;
-      const onScroll = () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          const rect = wrap.getBoundingClientRect();
-          const scrollable = rect.height - window.innerHeight;
-          const p = scrollable > 0 ? Math.min(1, Math.max(0, -rect.top / scrollable)) : 1;
-          setVars(p);
-          ticking = false;
-        });
-      };
-      window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", onScroll);
-      onScroll();
-      return () => {
-        window.removeEventListener("scroll", onScroll);
-        window.removeEventListener("resize", onScroll);
-      };
-    }
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        setVars(1);
+      } else {
+        let ticking = false;
+        const onScroll = () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            const rect = wrap.getBoundingClientRect();
+            const scrollable = rect.height - window.innerHeight;
+            const p = scrollable > 0 ? Math.min(1, Math.max(0, -rect.top / scrollable)) : 1;
+            setVars(p);
+            ticking = false;
+          });
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll);
+        onScroll();
+        return () => {
+          window.removeEventListener("scroll", onScroll);
+          window.removeEventListener("resize", onScroll);
+        };
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // ---- Voice flow waveform ----
   useEffect(() => {
-    const wave = voiceWaveRef.current;
-    if (wave) {
-      const BAR_COUNT = 32;
-      for (let i = 0; i < BAR_COUNT * 2; i++) {
-        const idx = i % BAR_COUNT;
-        const bar = document.createElement("span");
-        bar.style.setProperty("--wh", (34 + (idx % 8) * 7) + "%");
-        bar.style.setProperty("--wd", (0.35 + (idx % 4) * 0.1) + "s");
-        bar.style.setProperty("--wdel", (-(idx * 0.05)) + "s");
-        wave.appendChild(bar);
-      }
-    }
-
-    const FLOW_SPEED = 46;
-    document.fonts.ready.then(() => {
-      [
-        ["flow-in-text", "flow-in-anim"],
-        ["flow-out-text", "flow-out-anim"],
-      ].forEach(([textId, animId]) => {
-        const tp = document.getElementById(textId);
-        const anim = document.getElementById(animId);
-        if (!tp || !anim) return;
-        const half = tp.getComputedTextLength() / 2;
-        if (half > 0) {
-          anim.setAttribute("values", (-half).toFixed(1) + ";0");
-          anim.setAttribute("dur", (half / FLOW_SPEED).toFixed(2) + "s");
+    // Use setTimeout to ensure DOM is ready after Next.js hydration
+    const timer = setTimeout(() => {
+      const wave = voiceWaveRef.current;
+      if (wave) {
+        const BAR_COUNT = 32;
+        for (let i = 0; i < BAR_COUNT * 2; i++) {
+          const idx = i % BAR_COUNT;
+          const bar = document.createElement("span");
+          bar.style.setProperty("--wh", (34 + (idx % 8) * 7) + "%");
+          bar.style.setProperty("--wd", (0.35 + (idx % 4) * 0.1) + "s");
+          bar.style.setProperty("--wdel", (-(idx * 0.05)) + "s");
+          wave.appendChild(bar);
         }
-      });
-    });
+      }
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      flowSvgRef.current?.pauseAnimations();
-    }
+      const FLOW_SPEED = 46;
+      document.fonts.ready.then(() => {
+        [
+          ["flow-in-text", "flow-in-anim"],
+          ["flow-out-text", "flow-out-anim"],
+        ].forEach(([textId, animId]) => {
+          const tp = document.getElementById(textId);
+          const anim = document.getElementById(animId);
+          if (!tp || !anim) return;
+          const half = tp.getComputedTextLength() / 2;
+          if (half > 0) {
+            anim.setAttribute("values", (-half).toFixed(1) + ";0");
+            anim.setAttribute("dur", (half / FLOW_SPEED).toFixed(2) + "s");
+          }
+        });
+      });
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        flowSvgRef.current?.pauseAnimations();
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (

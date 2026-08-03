@@ -1,15 +1,39 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+
+const ACCOUNT_KEY = "rivertide_account";
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const accountStr = localStorage.getItem(ACCOUNT_KEY);
+    if (accountStr) {
+      try {
+        const account = JSON.parse(accountStr);
+        setIsAuthenticated(!!account.initialized);
+      } catch {
+        setIsAuthenticated(false);
+      }
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, [pathname]);
 
   const isActive = (href) => {
     if (href === "/" && pathname === "/") return true;
     if (href !== "/" && pathname.startsWith(href)) return true;
     return false;
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem(ACCOUNT_KEY);
+    router.push("/login");
   };
 
   return (
@@ -54,12 +78,29 @@ export default function Header() {
             </li>
           </ul>
         </nav>
-        <Link
-          href="/signup"
-          className="tx-btn tx-btn--primary tx-btn--sm"
-        >
-          <span className="tx-btn__inner">Sign up for free</span>
-        </Link>
+        {isAuthenticated ? (
+          <div className="flex gap-2">
+            <Link
+              href="/dashboard"
+              className="tx-btn tx-btn--primary tx-btn--sm"
+            >
+              <span className="tx-btn__inner">Dashboard</span>
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="tx-btn tx-btn--secondary tx-btn--sm"
+            >
+              <span className="tx-btn__inner">Log Out</span>
+            </button>
+          </div>
+        ) : (
+          <Link
+            href="/login"
+            className="tx-btn tx-btn--primary tx-btn--sm"
+          >
+            <span className="tx-btn__inner">Log In</span>
+          </Link>
+        )}
       </div>
     </header>
   );
