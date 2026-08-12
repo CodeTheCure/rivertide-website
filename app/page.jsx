@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import FnKey from "./components/ui/fn-key";
+import MacbookPro from "./components/ui/macbook-pro";
 
 export default function HomePage() {
   const [cognitiveLoad, setCognitiveLoad] = useState(20);
@@ -260,6 +262,25 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ---- Demo video (MacBook embed) ---- */}
+      <section className="py-20 px-container-padding bg-surface-container-low relative overflow-hidden">
+        <div className="max-w-4xl mx-auto">
+          <MacbookPro className="w-full h-auto text-black">
+            <video
+              className="h-full w-full object-cover"
+              src="/videos/RiverTideLaunch.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              disablePictureInPicture
+              aria-label="Rivertide launch reel"
+            />
+          </MacbookPro>
+        </div>
+      </section>
+
       {/* ---- How it works ---- */}
       <section className="py-20 px-container-padding bg-surface-container-low relative overflow-hidden">
         <div className="max-w-5xl mx-auto">
@@ -267,6 +288,9 @@ export default function HomePage() {
             <h2 className="font-headline-lg text-headline-lg mb-4">
               Speak. <span className="italic font-light text-healing-teal">It handles the rest.</span>
             </h2>
+            <div className="mt-12 mb-10 flex justify-center">
+              <FnKey />
+            </div>
           </div>
           <div className="grid md:grid-cols-3 gap-6" data-stagger>
             <div className="text-center">
@@ -283,7 +307,7 @@ export default function HomePage() {
               </div>
               <h3 className="font-headline-md text-headline-md mb-2">1. Speak</h3>
               <p className="font-body-md text-body-md text-on-surface-variant">
-                Just talk naturally &mdash; messy speech, pauses, whatever comes out.
+                Just talk naturally. Messy speech, pauses, whatever comes out.
               </p>
             </div>
             <div className="text-center">
@@ -299,7 +323,7 @@ export default function HomePage() {
               </div>
               <h3 className="font-headline-md text-headline-md mb-2">2. Understand</h3>
               <p className="font-body-md text-body-md text-on-surface-variant">
-                Your agent interprets context &mdash; meds, symptoms, appointments, everything.
+                Your agent interprets context: meds, symptoms, appointments, everything.
               </p>
             </div>
             <div className="text-center">
@@ -313,7 +337,7 @@ export default function HomePage() {
               </div>
               <h3 className="font-headline-md text-headline-md mb-2">3. Act</h3>
               <p className="font-body-md text-body-md text-on-surface-variant">
-                Logs symptoms, updates your care team, or drafts responses &mdash; done.
+                Logs symptoms, updates your care team, or drafts responses.
               </p>
             </div>
           </div>
